@@ -1,211 +1,161 @@
 import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
 
-// 👇 your existing config
-import { WINDOW_CONFIG, INITIAL_Z_INDEX, DEFAULT_WINDOW_SIZES, WINDOW_STACK_OFFSETS } from "#constants";
+import {
+  DEFAULT_WINDOW_SIZES,
+  INITIAL_Z_INDEX,
+  WINDOW_CONFIG,
+} from "#constants";
 
-// Store original sizes for restore functionality
-const originalSizes = new Map();
+let currentZIndex = INITIAL_Z_INDEX;
 
-const useWindowStore = create(
-  immer((set) => ({
-    windows: WINDOW_CONFIG,
-    nextZIndex: INITIAL_Z_INDEX + 1,
+const getCenteredPosition = (name, size) => {
+  if (typeof window === "undefined") return null;
 
-    // 🟢 OPEN WINDOW
-    openWindow: (id) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
+  const windowSize = size || DEFAULT_WINDOW_SIZES[name] || { width: 800, height: 600 };
+  const navHeight = 42;
+  const dockSpace = 112;
+  const availableHeight = Math.max(420, window.innerHeight - navHeight - dockSpace);
 
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+  return {
+    x: Math.max(18, Math.round((window.innerWidth - windowSize.width) / 2)),
+    y: Math.max(navHeight + 14, Math.round(navHeight + (availableHeight - windowSize.height) / 2)),
+  };
+};
 
-        // Always set default size for new windows
-        if (!win.size) {
-          win.size = DEFAULT_WINDOW_SIZES[id] || { width: 800, height: 600 };
-        }
-        const width = win.size.width;
-        const height = win.size.height;
+const useWindowStore = create((set) => ({
+  windows: WINDOW_CONFIG,
 
-        // Always center window when opening for the first time or if position is null
-       if (!win.position || win.position === null) {
-        const baseCenterX = (w - width) / 2;
-        const baseCenterY = (h - height) / 2 - 30;
+  openWindow: (name, data = null) => {
+    currentZIndex += 1;
 
-        const offset = WINDOW_STACK_OFFSETS[id] || { x: 0, y: 0 };
-
-        win.position = {
-          x: baseCenterX + offset.x,
-          y: baseCenterY + offset.y,
-        };
-        win.lastNormalPosition = { ...win.position };
-        win.lastNormalSize = { ...win.size };
-        }else {
-          // Check if existing position is out of bounds and fix it
-          const x = win.position.x;
-          const y = win.position.y;
-          const isOutOfView =
-            x + width < 100 ||
-            y + height < 100 ||
-            x > w - 100 ||
-            y > h - 100;
-
-          if (isOutOfView) {
-            const baseCenterX = (w - width) / 2;
-            const baseCenterY = (h - height) / 2 - 30;
-            const offset = WINDOW_STACK_OFFSETS[id] || { x: 0, y: 0 };
-            
-            win.position = {
-            x: baseCenterX + offset.x,
-            y: baseCenterY + offset.y,
-          };
-          }
-        }
-
-        win.isOpen = true;
-
-
-
-
-
-        win.zIndex = state.nextZIndex++;
-      }),
-
-    // 🔴 CLOSE WINDOW (DO NOT RESET SIZE/POSITION)
-    closeWindow: (id) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
-
-        win.isOpen = false;
-        win.isMinimized = false;
-      }),
-
-    // 🟡 MINIMIZE
-    minimizeWindow: (id) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
-
-        win.isMinimized = true;
-      }),
-
-    // 🔵 RESTORE (optional helper)
-    restoreWindow: (id) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
-
-        win.isOpen = true;
-        win.isMinimized = false;
-
-        win.zIndex = state.nextZIndex++;
-      }),
-
-    // 🟣 MAXIMIZE / RESTORE
-    toggleMaximize: (id) =>
-        set((state) => {
-          const win = state.windows[id];
-          if (!win) return;
-
-          if (win.sizeMode === "full") {
-            // restore latest remembered normal state
-            win.sizeMode = "normal";
-            win.size = win.lastNormalSize || DEFAULT_WINDOW_SIZES[id];
-            win.position = win.lastNormalPosition || win.position;
-          } else {
-            // before going fullscreen, remember current normal state
-            win.lastNormalSize = { ...win.size };
-            win.lastNormalPosition = win.position ? { ...win.position } : null;
-            win.sizeMode = "full";
-          }
-
-          win.zIndex = state.nextZIndex++;
-      }),
-
-    // 🎯 FOCUS WINDOW
-    focusWindow: (id) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win || !win.isOpen) return;
-
-        win.zIndex = state.nextZIndex++;
-      }),
-
-    // 📦 SET SIZE
-    setWindowPosition: (id, pos) =>
     set((state) => {
-      const win = state.windows[id];
-      if (!win) return;
+      const current = state.windows[name];
+      if (!current) return state;
 
-      win.position = pos;
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            isOpen: true,
+            isMinimized: false,
+            data,
+            zIndex: currentZIndex,
+            position: getCenteredPosition(name, current.size),
+          },
+        },
+      };
+    });
+  },
 
-      if (win.sizeMode === "normal") {
-        win.lastNormalPosition = { ...pos };
-      }
-    }),
+  closeWindow: (name) => {
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          isOpen: false,
+          isMinimized: false,
+        },
+      },
+    }));
+  },
 
-    // 📍 SET POSITION
-    setWindowPosition: (id, pos) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
+  focusWindow: (name) => {
+    currentZIndex += 1;
 
-        win.position = pos;
-      }),
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          zIndex: currentZIndex,
+        },
+      },
+    }));
+  },
 
-      setLastNormalState: (id, pos, size) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
+  minimizeWindow: (name) => {
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          isMinimized: true,
+        },
+      },
+    }));
+  },
 
-        win.lastNormalPosition = pos ? { ...pos } : win.lastNormalPosition;
-        win.lastNormalSize = size ? { ...size } : win.lastNormalSize;
-      }),
+  restoreWindow: (name) => {
+    currentZIndex += 1;
 
-    // 🧠 SET SIZE MODE
-    setSizeMode: (id, mode) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          isOpen: true,
+          isMinimized: false,
+          zIndex: currentZIndex,
+          position: state.windows[name]?.position || getCenteredPosition(name, state.windows[name]?.size),
+        },
+      },
+    }));
+  },
 
-        win.sizeMode = mode;
-      }),
+  setWindowPosition: (name, position) => {
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          position,
+        },
+      },
+    }));
+  },
 
-    // 🧠 ENSURE PROPER WINDOW INITIALIZATION
-    initializeWindow: (id) =>
-      set((state) => {
-        const win = state.windows[id];
-        if (!win) return;
+  setWindowSize: (name, size) => {
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          size,
+        },
+      },
+    }));
+  },
 
-        // Ensure window has proper size
-        if (!win.size || !win.size.width || !win.size.height) {
-          win.size = DEFAULT_WINDOW_SIZES[id] || { width: 800, height: 600 };
-        }
+  setSizeMode: (name, sizeMode) => {
+    set((state) => ({
+      windows: {
+        ...state.windows,
+        [name]: {
+          ...state.windows[name],
+          sizeMode,
+        },
+      },
+    }));
+  },
 
-        // Ensure window has proper position
-        if (!win.position) {
-          const w = window.innerWidth;
-          const h = window.innerHeight;
-          const width = win.size.width;
-          const height = win.size.height;
-          
-          win.position = {
-            x: (w - width) / 2,
-            y: (h - height) / 2,
-          };
-        }
+  toggleMaximize: (name) => {
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
 
-        // Store original size for maximize/restore
-        if (!originalSizes.has(id)) {
-          originalSizes.set(id, {
-            size: { ...win.size },
-            position: win.position ? { ...win.position } : null
-          });
-        }
-      }),
-  }))
-);
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            sizeMode: current.sizeMode === "full" ? "normal" : "full",
+          },
+        },
+      };
+    });
+  },
+}));
 
 export default useWindowStore;

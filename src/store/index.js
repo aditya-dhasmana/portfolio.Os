@@ -1,4 +1,5 @@
 import useWindowStore from "./window";
 import useLocationStore from "./location";
+import useDataStore from "./useDataStore";
 
-export {useWindowStore , useLocationStore } 
+export {useWindowStore , useLocationStore , useDataStore} 

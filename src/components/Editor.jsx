@@ -6,7 +6,6 @@ import { useMonaco } from "@monaco-editor/react";
 const CodeEditor = ({ activeFile, openTabs = [], setActiveFile, closeTab }) => {
   const monaco = useMonaco();
 
-  // 🎨 VS CODE THEME
   useEffect(() => {
     if (monaco) {
       monaco.editor.defineTheme("vscode-dark", {
@@ -41,7 +40,6 @@ const CodeEditor = ({ activeFile, openTabs = [], setActiveFile, closeTab }) => {
 
   return (
     <div className="editor">
-      {/* TABS */}
       <div className="editor-tabs">
         {openTabs.map((tab) => (
           <div
@@ -51,7 +49,8 @@ const CodeEditor = ({ activeFile, openTabs = [], setActiveFile, closeTab }) => {
             })}
             onClick={() => setActiveFile(tab)}
           >
-            {tab.name}
+            <span className="truncate max-w-[110px]">{tab.name}</span>
+
             <span
               onClick={(e) => {
                 e.stopPropagation();
@@ -64,7 +63,6 @@ const CodeEditor = ({ activeFile, openTabs = [], setActiveFile, closeTab }) => {
         ))}
       </div>
 
-      {/* EDITOR */}
       <div className="editor-body">
         {activeFile ? (
           <Editor
@@ -73,28 +71,23 @@ const CodeEditor = ({ activeFile, openTabs = [], setActiveFile, closeTab }) => {
             language={getLanguage(activeFile.name)}
             value={activeFile.content || "// Loading..."}
             options={{
-              fontSize: 14,
+              fontSize: window.innerWidth < 768 ? 11 : 14,
               fontFamily: "Fira Code, monospace",
               fontLigatures: true,
-              lineHeight: 22,
-
-              minimap: { enabled: true },
-
+              lineHeight: window.innerWidth < 768 ? 18 : 22,
+              minimap: { enabled: window.innerWidth > 768 },
               smoothScrolling: true,
               cursorSmoothCaretAnimation: "on",
               cursorBlinking: "smooth",
-
               renderLineHighlight: "all",
               scrollBeyondLastLine: false,
-
               wordWrap: "on",
               tabSize: 2,
-
               automaticLayout: true,
             }}
           />
         ) : (
-          <div className="editor-empty">Open a file</div>
+          <div className="editor-empty">Select a file to preview source code</div>
         )}
       </div>
     </div>

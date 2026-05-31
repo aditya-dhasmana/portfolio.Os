@@ -1,53 +1,55 @@
-import React from 'react';
+import React from "react";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
+
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null,
+    };
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return {
+      hasError: true,
+      error,
+    };
   }
 
   componentDidCatch(error, errorInfo) {
+    console.error("Caught by ErrorBoundary:", error, errorInfo);
+
     this.setState({
-      error: error,
-      errorInfo: errorInfo
+      error,
+      errorInfo: errorInfo || null,
     });
-    
-    // Log error to service in production
-    console.error('Error caught by boundary:', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
-          <div className="max-w-md text-center">
-            <h1 className="text-2xl font-bold mb-4">Oops! Something went wrong</h1>
-            <p className="text-gray-400 mb-6">
-              An unexpected error occurred. Please refresh the page and try again.
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
-            >
-              Refresh Page
-            </button>
-            {process.env.NODE_ENV === 'development' && (
-              <details className="mt-6 text-left">
-                <summary className="cursor-pointer text-sm text-gray-500">
-                  Error Details (Development)
-                </summary>
-                <pre className="mt-2 p-4 bg-gray-900 rounded text-xs overflow-auto">
-                  {this.state.error && this.state.error.toString()}
-                  <br />
-                  {this.state.errorInfo.componentStack}
-                </pre>
-              </details>
-            )}
-          </div>
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            background: "#111",
+            color: "white",
+            padding: "30px",
+            overflow: "auto",
+            fontFamily: "monospace",
+          }}
+        >
+          <h2>App Crashed</h2>
+
+          <pre style={{ whiteSpace: "pre-wrap" }}>
+            {this.state.error?.toString()}
+          </pre>
+
+          <pre style={{ whiteSpace: "pre-wrap", opacity: 0.7 }}>
+            {this.state.errorInfo?.componentStack || "No component stack available"}
+          </pre>
         </div>
       );
     }

@@ -8,10 +8,15 @@ import useWindowStore from "#store/window";
 import { OptimizedImage } from "#components/Index";
 
 const Dock = () => {
-  const { openWindow, closeWindow, restoreWindow, focusWindow, windows } = useWindowStore();
+  const {
+    openWindow,
+    restoreWindow,
+    focusWindow,
+    windows,
+  } = useWindowStore();
+
   const dockRef = useRef(null);
 
-    // 🎯 GSAP Dock Animation
   useGSAP(() => {
     const dock = dockRef.current;
     if (!dock) return;
@@ -26,11 +31,11 @@ const Dock = () => {
         const center = iconLeft - left + width / 2;
         const distance = Math.abs(mouseX - center);
 
-        const intensity = Math.exp(-(distance ** 2) / 15000); // smoother
+        const intensity = Math.exp(-(distance ** 2) / 12000);
 
         gsap.to(icon, {
-          scale: 1 + 0.25 * intensity,
-          y: -15 * intensity,
+          scale: 1 + 0.18 * intensity,
+          y: -10 * intensity,
           duration: 0.2,
           ease: "power1.out",
         });
@@ -62,23 +67,25 @@ const Dock = () => {
     };
   }, []);
 
-  // Window Toggle Logic (simple behavior)
-  const toggleApp = (id) => {
-    const { windows } = useWindowStore.getState();
-    const win = windows[id];
+  const toggleApp = (id, canOpen = true) => {
+    if (!canOpen) return;
 
+    const win = windows?.[id];
     if (!win) return;
 
-    if (win.isMinimized) {
-      // If minimized, restore and focus
-      restoreWindow(id);
-    } else if (!win.isOpen) {
-      // If closed, open
-      openWindow(id);
-    } else {
-      // If open, close it
-      closeWindow(id);
+    if (!win.isOpen) {
+      openWindow?.(id);
+      focusWindow?.(id);
+      return;
     }
+
+    if (win.isMinimized) {
+      restoreWindow?.(id);
+      focusWindow?.(id);
+      return;
+    }
+
+    focusWindow?.(id);
   };
 
   return (
@@ -86,35 +93,35 @@ const Dock = () => {
       <div ref={dockRef} className="dock-container">
         {dockApps.map(({ id, name, icon, canOpen }) => (
           <div key={id} className="relative flex justify-center">
-            
             <button
               type="button"
               className="dock-icon focus:outline-none focus:ring-2 focus:ring-white/50"
-              aria-label={`${name} ${windows[id]?.isOpen ? 'open' : 'closed'} ${!canOpen ? 'disabled' : ''}`}
-              aria-pressed={windows[id]?.isOpen || false}
+              aria-label={name}
+              aria-pressed={windows?.[id]?.isOpen || false}
               data-tooltip-id="dock-tooltip"
               data-tooltip-content={name}
               data-tooltip-delay-show={150}
               disabled={!canOpen}
-              onClick={() => toggleApp(id)}
+              onClick={() => toggleApp(id, canOpen)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  toggleApp(id);
+                  toggleApp(id, canOpen);
                 }
               }}
             >
               <OptimizedImage
                 src={`/images/${icon}`}
                 alt={name}
-                className={`object-cover object-center ${canOpen ? "" : "opacity-60"}`}
+                className={`object-cover object-center ${
+                  canOpen ? "" : "opacity-60"
+                }`}
               />
             </button>
 
-            {/* Active indicator (like macOS) */}
-            {windows[id]?.isOpen && (
-              <span 
-                className="absolute -bottom-1 h-1 w-1 rounded-full bg-white"
+            {windows?.[id]?.isOpen && (
+              <span
+                className="dock-active-dot"
                 aria-hidden="true"
               />
             )}

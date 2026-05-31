@@ -161,18 +161,22 @@ const gallery = [
   {
     id: 1,
     img: "/images/gal1.png",
+    name: "sunset-beach.jpg",
   },
   {
     id: 2,
     img: "/images/gal2.png",
+    name: "mountain-landscape.jpg",
   },
   {
     id: 3,
     img: "/images/gal3.png",
+    name: "city-lights.jpg",
   },
   {
     id: 4,
     img: "/images/gal4.png",
+    name: "summer-vacation.jpg",
   },
 ];
 
@@ -193,246 +197,7 @@ const WORK_LOCATION = {
   name: "Work",
   icon: "/icons/work.svg",
   kind: "folder",
-  children: [
-    // ▶ Project 1
-    {
-      id: 5,
-      name: "Nike Ecommerce Website Application",
-      icon: "/images/folder.png",
-      kind: "folder",
-      windowPosition: "top-[5vh] left-5", // optional: Finder window position
-      children: [
-        {
-          id: 1,
-          name: "Nike Project.txt",
-          icon: "/images/txt.png",
-          kind: "file",
-          fileType: "txt",
-          description: [
-            "The Nike eCommerce website is a sleek and modern platform designed for shopping the latest Nike collections.",
-            "Instead of a simple online store, it delivers an immersive experience with bold visuals, interactive product displays, and smooth navigation.",
-            "Think of it like walking into a flagship Nike store—but right from your phone or laptop.",
-            "It's built with Next.js and Tailwind, ensuring fast performance, responsive design, and a clean, premium look.",
-          ],
-        },
-        {
-          id: 2,
-          name: "nike.com",
-          icon: "/images/safari.png",
-          kind: "file",
-          fileType: "url",
-          href: "https://youtu.be/fZdTYswuZjU?si=Awjl-pIst9e09_UU",
-        },
-        {
-          id: 4,
-          name: "nike.png",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/project-1.png",
-        },
-        {
-          id: 5,
-          name: "Design.fig",
-          icon: "/images/plain.png",
-          kind: "file",
-          fileType: "fig",
-          href: "https://google.com",
-        },
-      ],
-    },
-
-    // ▶ Project 2
-    {
-      id: 6,
-      name: "AI Resume Analyzer",
-      icon: "/images/folder.png",
-      kind: "folder",
-      windowPosition: "top-[20vh] left-7",
-      children: [
-        {
-          id: 1,
-          name: "AI Resume Analyzer Project.txt",
-          icon: "/images/txt.png",
-          kind: "file",
-          fileType: "txt",
-                    description: [
-            "AI Resume Analyzer is a smart tool that helps you perfect your resume with instant feedback.",
-            "Instead of guessing what recruiters want, you get AI-powered insights on keywords, formatting, and overall impact.",
-            "Think of it like having a career coach—pointing out strengths, fixing weaknesses, and boosting your chances of landing interviews.",
-            "It's built with Next.js and Tailwind, so it runs fast, looks professional, and works seamlessly on any device.",
-          ],
-        },
-        {
-          id: 2,
-          name: "YouTube to Transcript",
-          icon: "/images/safari.png",
-          kind: "file",
-          fileType: "url",
-          href: "https://www.yt2trascript.in/",
-        },
-        {
-          id: 4,
-          name: "ai-resume-analyzer.png",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/project-2.png",
-        },
-        {
-          id: 5,
-          name: "Design.fig",
-          icon: "/images/plain.png",
-          kind: "file",
-          fileType: "fig",
-          href: "https://google.com",
-        },
-      ],
-    },
-
-    // ð Project 3
-    {
-      id: 7,
-      name: "Food Delivery App",
-      icon: "/images/folder.png",
-      kind: "folder",
-      windowPosition: "top-[33vh] left-7",
-      children: [
-        {
-          id: 1,
-          name: "Food Delivery App Project.txt",
-          icon: "/images/txt.png",
-          kind: "file",
-          fileType: "txt",
-                    description: [
-            "Our Food Delivery App is a fast and convenient way to order meals from your favorite restaurants.",
-            "Instead of making calls or waiting in line, you can browse menus, customize orders, and track deliveries in real time.",
-            "Think of it like having your favorite restaurants in your pocket-ready to deliver anytime, anywhere.",
-            "It's built with React Native, so it works smoothly on both iOS and Android with a clean, modern design.",
-          ],
-        },
-        {
-          id: 2,
-          name: "food-delivery-app.com",
-          icon: "/images/safari.png",
-          kind: "file",
-          fileType: "url",
-          href: "https://youtu.be/LKrX390fJMw?si=cExkuVhf2DTV9G2-",
-        },
-        {
-          id: 4,
-          name: "food-delivery-app.png",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/project-3.png",
-        },
-        {
-          id: 5,
-          name: "Design.fig",
-          icon: "/images/plain.png",
-          kind: "file",
-          fileType: "fig",
-          href: "https://google.com",
-        },
-      ],
-    },
-
-    // ð Project 4 - Portfolio Website
-    {
-      id: 8,
-      name: "Portfolio Website",
-      icon: "/images/folder.png",
-      kind: "folder",
-      windowPosition: "top-[15vh] left-10",
-      children: [
-        {
-          id: 1,
-          name: "Portfolio Project.txt",
-          icon: "/images/txt.png",
-          kind: "file",
-          fileType: "txt",
-          description: [
-            "A stunning portfolio website showcasing creative work with smooth animations and modern design.",
-            "Features interactive galleries, project showcases, and a contact form with seamless user experience.",
-            "Built with React, GSAP animations, and Tailwind CSS for a professional, responsive presentation.",
-            "Optimized for performance with lazy loading and modern web development best practices.",
-          ],
-        },
-        {
-          id: 2,
-          name: "portfolio-demo.com",
-          icon: "/images/safari.png",
-          kind: "file",
-          fileType: "url",
-          href: "https://github.com/aditya-dhasmana",
-        },
-        {
-          id: 3,
-          name: "portfolio-screenshot.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/project-1.png",
-        },
-        {
-          id: 4,
-          name: "source-code.zip",
-          icon: "/images/plain.png",
-          kind: "file",
-          fileType: "fig",
-          href: "https://github.com/aditya-dhasmana",
-        },
-      ],
-    },
-
-    // ð Project 5 - Task Management App
-    {
-      id: 9,
-      name: "Task Management App",
-      icon: "/images/folder.png",
-      kind: "folder",
-      windowPosition: "top-[25vh] right-5",
-      children: [
-        {
-          id: 1,
-          name: "Task Manager Project.txt",
-          icon: "/images/txt.png",
-          kind: "file",
-          fileType: "txt",
-          description: [
-            "A comprehensive task management application with drag-and-drop functionality and real-time updates.",
-            "Features project organization, team collaboration, deadline tracking, and progress visualization.",
-            "Built with React, Node.js, and MongoDB for a full-stack productivity solution.",
-            "Includes mobile-responsive design and offline capabilities for enhanced user experience.",
-          ],
-        },
-        {
-          id: 2,
-          name: "taskmanager-app.com",
-          icon: "/images/safari.png",
-          kind: "file",
-          fileType: "url",
-          href: "https://jsmastery.com/",
-        },
-        {
-          id: 3,
-          name: "taskmanager-ui.png",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/project-2.png",
-        },
-        {
-          id: 4,
-          name: "api-documentation.pdf",
-          icon: "/images/pdf.png",
-          kind: "file",
-          fileType: "pdf",
-        },
-      ],
-    },
-  ],
+  children: [], // 👈 will be filled dynamically
 };
 
 const ABOUT_LOCATION = {
@@ -512,116 +277,49 @@ const VSCODE_LOCATION = {
   children: [],
 };
 
+const buildGalleryFile = (item) => ({
+  id: `gallery-${item.id}`,
+  name: item.name,
+  icon: "/images/image.png",
+  kind: "file",
+  fileType: "img",
+  imageUrl: item.img,
+});
+
 const GALLERY_LOCATION = {
   id: 5,
   type: "gallery",
   name: "Gallery",
-  icon: "/icons/photos.svg",
+  icon: "/images/photos.png",
   kind: "folder",
   children: [
     {
       id: 1,
       name: "Library",
-      icon: "/icons/folder.png",
+      icon: "/images/folder.png",
       kind: "folder",
-      children: [
-        {
-          id: 1,
-          name: "sunset-beach.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/gal1.png",
-        },
-        {
-          id: 2,
-          name: "mountain-landscape.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/gal2.png",
-        },
-        {
-          id: 3,
-          name: "city-lights.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/gal3.png",
-        },
-      ],
+      children: gallery.map(buildGalleryFile),
     },
     {
       id: 2,
       name: "Memories",
-      icon: "/icons/folder.png",
+      icon: "/images/folder.png",
       kind: "folder",
-      children: [
-        {
-          id: 1,
-          name: "summer-vacation.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/gal4.png",
-        },
-        {
-          id: 2,
-          name: "family-gathering.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/adrian.jpg",
-        },
-      ],
+      children: gallery.slice(0, 2).map(buildGalleryFile),
     },
     {
       id: 3,
       name: "Places",
-      icon: "/icons/folder.png",
+      icon: "/images/folder.png",
       kind: "folder",
-      children: [
-        {
-          id: 1,
-          name: "downtown-skyline.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/adrian-2.jpg",
-        },
-        {
-          id: 2,
-          name: "nature-trail.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/adrian-3.jpeg",
-        },
-      ],
+      children: gallery.slice(2).map(buildGalleryFile),
     },
     {
       id: 4,
-      name: "Projects",
-      icon: "/icons/folder.png",
+      name: "Favorites",
+      icon: "/images/folder.png",
       kind: "folder",
-      children: [
-        {
-          id: 1,
-          name: "design-mockup.fig",
-          icon: "/images/plain.png",
-          kind: "file",
-          fileType: "fig",
-          href: "https://google.com",
-        },
-        {
-          id: 2,
-          name: "portfolio-screenshot.jpg",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          imageUrl: "/images/project-1.png",
-        },
-      ],
+      children: gallery.filter((item) => item.id === 1 || item.id === 4).map(buildGalleryFile),
     },
   ],
 };
@@ -647,18 +345,6 @@ const DEFAULT_WINDOW_SIZES = {
   vsCode: { width: 1100, height: 700 },
   txtfile: { width: 500, height: 600 },
   imgfile: { width: 600, height: 700 },
-};
-
-const WINDOW_STACK_OFFSETS = {
-  vsCode:   { x: -260, y: -140 },
-  safari:   { x: -120, y: -60 },
-  finder:   { x: -180, y: -40 },
-  terminal: { x: -40,  y: 40 },
-  photos:   { x: 20,   y: 70 },
-  contact:  { x: 240,  y: 110 },
-  resume:   { x: 220,  y: -90 },
-  txtfile:  { x: 160,  y: -20 },
-  imgfile:  { x: -230, y: 80 },
 };
 
 const WINDOW_CONFIG = {
@@ -784,4 +470,4 @@ const WINDOW_CONFIG = {
   },
 };
 
-export { INITIAL_Z_INDEX, WINDOW_CONFIG, DEFAULT_WINDOW_SIZES , WINDOW_STACK_OFFSETS };
+export { INITIAL_Z_INDEX, WINDOW_CONFIG, DEFAULT_WINDOW_SIZES };

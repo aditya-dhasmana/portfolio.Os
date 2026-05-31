@@ -1,7 +1,6 @@
-import React from 'react'
-
-import { WindowControls } from '#components/Index'
-import windowWrapper from '#hoc/windowWrapper'
+import React from "react";
+import { WindowControls } from "#components/Index";
+import windowWrapper from "#hoc/windowWrapper";
 import {
   ChevronLeft,
   ChevronRight,
@@ -12,14 +11,13 @@ import {
   Search,
   Share,
   ShieldHalf,
-} from 'lucide-react'
+} from "lucide-react";
+import { blogPosts } from "#constants";
 
-import { blogPosts } from '#constants'
-
+// eslint-disable-next-line react-refresh/only-export-components
 const Safari = () => {
   return (
     <>
-      {/* HEADER */}
       <div id="window-header">
         <div className="flex items-center gap-3">
           <WindowControls target="safari" />
@@ -32,11 +30,7 @@ const Safari = () => {
           <div className="search">
             <ShieldHalf className="icon" />
             <Search className="icon" />
-            <input
-              type="text"
-              placeholder="Search or enter website name"
-              className="flex-1"
-            />
+            <input type="text" placeholder="Search or enter website name" className="flex-1" />
           </div>
         </div>
 
@@ -47,21 +41,15 @@ const Safari = () => {
         </div>
       </div>
 
-      {/* BLOG */}
       <div className="blog">
         <h2>My Developer Blog</h2>
 
         <div className="space-y-8">
           {blogPosts.map(({ id, title, image, date, link }) => (
             <div key={id} className="blog-post">
-              <div className="col-span-2 ">
-              <img
-                src={image}
-                alt={title}
-                
-              />
+              <div className="col-span-2">
+                <img src={image} alt={title} />
               </div>
-
 
               <div className="content">
                 <p>{date}</p>
@@ -71,14 +59,12 @@ const Safari = () => {
                   <MoveRight className="icon-hover" />
                 </a>
               </div>
-
             </div>
           ))}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-const SafariWindow = windowWrapper(Safari, 'safari')
-export default SafariWindow
+export default windowWrapper(Safari, "safari");

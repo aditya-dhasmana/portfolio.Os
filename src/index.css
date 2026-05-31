@@ -41,10 +41,10 @@ body {
   }
 
   nav {
-    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none;
+    @apply flex justify-between items-center bg-white/45 backdrop-blur-3xl py-1.5 px-4 select-none border-b border-white/20;
 
     div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
+      @apply flex items-center max-sm:w-full max-sm:justify-center gap-3;
 
       &:last-child {
         @apply max-sm:hidden;
@@ -52,7 +52,7 @@ body {
     }
 
     ul {
-      @apply flex items-center gap-5 max-sm:hidden;
+      @apply flex items-center gap-4 max-sm:hidden;
 
       p {
         @apply text-sm cursor-pointer hover:underline transition-all;
@@ -60,7 +60,7 @@ body {
     }
 
     time {
-      @apply text-sm font-medium text-black;
+      @apply text-xs font-medium text-black;
     }
   }
 }
@@ -75,10 +75,10 @@ body {
   }
 
   #dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
+    @apply absolute bottom-4 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
 
     .dock-container {
-      @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5;
+      @apply bg-white/18 backdrop-blur-xl justify-between rounded-2xl px-2 py-1.5 flex items-end gap-1.5 border border-white/15 shadow-2xl;
     }
 
     .tooltip {
@@ -86,13 +86,90 @@ body {
     }
 
     .dock-icon {
-      @apply size-14 3xl:size-20 cursor-pointer;
+      @apply size-11 3xl:size-14 cursor-pointer;
 
       img {
         @apply object-cover object-center;
       }
     }
+
+    .dock-active-dot {
+      @apply absolute left-1/2 -translate-x-1/2 rounded-full bg-black/75;
+      bottom: -5px;
+      width: 4px;
+      height: 4px;
+    }
   }
+
+#intro-loader {
+  @apply fixed inset-0 flex items-center justify-center z-[9999];
+
+  /* 🔥 better macOS glass (not too white) */
+  background-image: url('/images/wallpaper.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+   position: absolute;
+
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    /* optional dark tint (recommended for readability) */
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+
+  .intro-text {
+    @apply text-center font-medium;
+
+    /* 🔥 cleaner mac font feel */
+    font-size: 2.8rem;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.9);
+
+    /* 🔥 smoother animation */
+    animation: macFade 0.9s ease;
+  }
+}
+
+/* 📱 responsive */
+@media (max-width: 640px) {
+  #intro-loader {
+    .intro-text {
+      font-size: 2rem;
+    }
+  }
+}
+
+/* 🔥 macOS-style fade (IMPORTANT FIX) */
+@keyframes macFade {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  80% {
+    opacity: 1; /* 👈 HOLD (this is the magic) */
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-4px); /* 👈 very subtle exit */
+  }
+}
 
   #window-controls {
 
@@ -101,20 +178,20 @@ body {
     @apply flex gap-2 ;
 
     .close {
-      @apply size-4 rounded-full bg-[#ff6157] cursor-pointer;
+      @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer;
     }
 
     .minimize {
-      @apply size-4 rounded-full bg-[#ffc030] ;
+      @apply size-3.5 rounded-full bg-[#ffc030] ;
     }
 
     .maximize {
-      @apply size-4 rounded-full bg-[#2acb42];
+      @apply size-3.5 rounded-full bg-[#2acb42] cursor-pointer;
     }
   }
 
   #window-header {
-    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+    @apply flex items-center justify-between px-3 py-2 rounded-t-lg bg-gray-50/95 border-b border-gray-200 select-none text-xs text-gray-400;
   }
 
   #safari {
@@ -319,69 +396,86 @@ body {
   }
 }
 
-  #finder {
-   @apply absolute w-3xl shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
+#finder {
+  @apply absolute w-3xl shadow-2xl overflow-hidden rounded-xl;
 
-    .sidebar {
-      @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3;
+  .sidebar {
+    @apply w-44 bg-gray-50 border-r border-gray-200 flex flex-col p-4 space-y-3;
 
-      h3 {
-        @apply text-xs font-medium text-gray-400 mb-1;
-      }
-
-      ul {
-        @apply space-y-1;
-
-        .active {
-          @apply bg-blue-100 text-blue-700;
-        }
-
-        .not-active {
-          @apply text-gray-700 hover:bg-gray-200;
-        }
-
-        li {
-          @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
-        }
-      }
+    h3 {
+      @apply text-xs font-medium text-gray-400 mb-1;
     }
 
-    .content {
-      @apply flex-1 p-8 bg-white max-w-2xl relative;
+    ul {
+      @apply space-y-1;
 
       li {
-        @apply absolute flex items-center flex-col gap-3;
-
-        img {
-          @apply object-contain object-center size-16 relative group-hover:scale-105;
-        }
-
-        p {
-          @apply text-sm text-center font-medium w-40;
-        }
+        @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
       }
-    }
 
-    .content-grid {
-      @apply flex-1 p-8 bg-white overflow-y-auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 1.5rem;
-      align-content: start;
+      .active {
+        @apply bg-blue-100 text-blue-700;
+      }
 
-      .grid-item {
-        @apply flex flex-col items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-50 hover:shadow-md;
-
-        .item-icon {
-          @apply size-16 object-contain transition-transform duration-200 group-hover:scale-105;
-        }
-
-        .item-name {
-          @apply text-sm text-center font-medium text-gray-700 wrap-break-word max-w-25 line-clamp-2;
-        }
+      .not-active {
+        @apply text-gray-700 hover:bg-gray-200;
       }
     }
   }
+
+  /* =========================
+     CONTENT GRID
+  ========================= */
+  .content-grid {
+    @apply flex-1 p-6 bg-white overflow-y-auto;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 1.15rem;
+    align-content: start;
+
+    .grid-item {
+      @apply flex flex-col items-center justify-start gap-1.5 p-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-50;
+
+      /* 🔥 FIX: ICON WRAPPER */
+      .item-icon-wrapper {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 🔵 FOLDER IMAGE (KEEP BIG BLUE ICON) */
+      .item-icon-img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+      }
+
+      /* ⚛️ REACT ICON WRAPPER */
+      .item-icon-react {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* 🔥 THIS FIXES SMALL ICON BUG */
+      .item-icon-react svg {
+        width: 34px !important;
+        height: 34px !important;
+      }
+
+      .item-name {
+        @apply text-xs text-center font-medium text-gray-700;
+        max-width: 92px;
+        word-break: break-word;
+      }
+    }
+  }
+}
 
   #txtfile {
     @apply w-md bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
@@ -460,9 +554,9 @@ body {
     p {
       @apply text-white text-center mt-1;
 
-      font-size: 13px;
+      font-size: 11px;
 
-      max-width: 110px;
+      max-width: 92px;
 
       line-height: 1.1;
 
@@ -527,34 +621,59 @@ body {
       flex-direction: column;
     }
 
-    /* ================= EXPLORER ================= */
+/* ================= EXPLORER ================= */
     .explorer {
       width: 260px;
       background: #252526;
       border-right: 1px solid #333;
       overflow-y: auto;
+      user-select: none;
 
       .panel-title {
         font-size: 11px;
-        padding: 8px;
+        padding: 10px 8px;
         color: #888;
+        letter-spacing: 1px;
       }
 
       .repo-title {
         padding: 6px 8px;
-        font-weight: bold;
+        font-weight: 600;
         cursor: pointer;
         color: #ccc;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
 
         &:hover {
           background: #2a2d2e;
         }
+
+        .arrow {
+          width: 10px;
+          font-size: 10px;
+          color: #888;
+        }
+        .loading-dot {
+          margin-left: auto;
+          font-size: 10px;
+          color: #888;
+          animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+          0% { opacity: 0.2; }
+          50% { opacity: 1; }
+          100% { opacity: 0.2; }
+        }
       }
 
       .explorer-item {
-        padding: 4px 8px;
+        padding: 2px 8px;
+        margin: 1px 4px;
+        border-radius: 4px;
         cursor: pointer;
-        font-size: 13px;
 
         &:hover {
           background: #2a2d2e;
@@ -569,16 +688,42 @@ body {
       .explorer-row {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
+        min-height: 22px;
+
+        .folder-arrow {
+          width: 10px;
+          font-size: 10px;
+          color: #888;
+          display: flex;
+          justify-content: center;
+        }
 
         .icon {
-          width: 18px;
+          width: 16px;
           display: flex;
           justify-content: center;
         }
 
         .name {
           font-size: 13px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .nested-folder {
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 14px;
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          background: rgba(255, 255, 255, 0.05);
         }
       }
     }
@@ -995,4 +1140,29 @@ body {
       }
     }
   }
+}
+
+.terminal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.terminal-actions a {
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-size: 12px;
+  text-decoration: none;
+  transition: .2s ease;
+}
+
+.terminal-actions a:hover {
+  background: rgba(255,255,255,0.16);
+}
+
+.desktop-inactive {
+  pointer-events: none;
+  z-index: 0;
 }

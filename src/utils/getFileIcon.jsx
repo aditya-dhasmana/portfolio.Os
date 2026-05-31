@@ -3,6 +3,8 @@ import {
   VscFile,
   VscSymbolMethod,
   VscFilePdf,
+  VscFolder,
+  VscMarkdown,
 } from "react-icons/vsc";
 
 import {
@@ -12,12 +14,19 @@ import {
   FaCss3Alt,
   FaJs,
   FaImage,
+  FaEnvira,
+  FaNpm,
 } from "react-icons/fa";
 
-const getFileIcon = (name = "") => {
-  const ext = name.split(".").pop().toLowerCase();
+const getFileIcon = (name = "", type = "file") => {
+  const lower = name.toLowerCase();
+  const ext = lower.split(".").pop();
 
-  if (name.endsWith(".jsx") || name.endsWith(".tsx"))
+  if (type === "folder" || type === "tree") {
+    return <VscFolder color="#dcb67a" />;
+  }
+
+  if (lower.endsWith(".jsx") || lower.endsWith(".tsx"))
     return <FaReact color="#61dafb" />;
 
   if (ext === "js") return <FaJs color="#f7df1e" />;
@@ -26,12 +35,14 @@ const getFileIcon = (name = "") => {
   if (ext === "html") return <FaHtml5 color="#e34c26" />;
   if (ext === "css") return <FaCss3Alt color="#264de4" />;
   if (ext === "pdf") return <VscFilePdf color="#ff0000" />;
+  if (ext === "md") return <VscMarkdown color="#42a5f5" />;
 
-  if (["png", "jpg", "jpeg", "gif", "svg"].includes(ext))
+  if (lower.includes(".env")) return <FaEnvira color="#57cc99" />;
+  if (lower.includes("package")) return <FaNpm color="#cb3837" />;
+  if (lower.includes("node")) return <FaNodeJs color="#68a063" />;
+
+  if (["png", "jpg", "jpeg", "gif", "svg", "webp"].includes(ext))
     return <FaImage color="#c586c0" />;
-
-  if (name.toLowerCase().includes("node"))
-    return <FaNodeJs color="#68a063" />;
 
   return <VscFile color="#c5c5c5" />;
 };

@@ -1,21 +1,40 @@
-import { locations } from "#constants";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-const DEFAULT_LOCATION = locations.work
+const useLocationStore = create(
+  immer((set) => ({
+    activeLocation: null,
+    history: [],
 
-const useLocationStore = create(immer((set)=>(
-    {  
-        activeLocation: locations.work,
+    setActiveLocation: (location = null) =>
+      set((state) => {
+        if (state.activeLocation && location?.id !== state.activeLocation.id) {
+          state.history.push(state.activeLocation);
+        }
 
-        setActiveLocation: (location = null) => set((state)=>{
-            state.activeLocation = location;
-        }),
+        state.activeLocation = location;
+      }),
 
-        resetActiveLocation : () =>set((state)=>{
-            state.setActiveLocation = DEFAULT_LOCATION;
-        })
-      }
-)));
+    goBackLocation: () =>
+      set((state) => {
+        if (state.history.length === 0) return;
+
+        const prev = state.history[state.history.length - 1];
+        state.history.pop();
+        state.activeLocation = prev;
+      }),
+
+    jumpToLocation: (location) =>
+      set((state) => {
+        state.activeLocation = location;
+      }),
+
+    resetActiveLocation: (defaultLocation) =>
+      set((state) => {
+        state.activeLocation = defaultLocation;
+        state.history = [];
+      }),
+  }))
+);
 
 export default useLocationStore;

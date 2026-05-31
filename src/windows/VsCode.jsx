@@ -1,17 +1,38 @@
+/**
+ * PURPOSE:
+ * Render the desktop VS Code-style source preview window.
+ * RESPONSIBILITY:
+ * Load repositories, open source files, manage editor tabs, and compose explorer/editor/terminal panels.
+ * USED BY:
+ * Desktop app window registry.
+ * DEPENDS ON:
+ * GitHub API helpers, desktop window wrapper, window store, and code preview components.
+ * SHOULD NOT HANDLE:
+ * Finder navigation, portfolio file-system construction, mobile shell behavior, or global app startup.
+ * SCALING NOTES:
+ * Repo loading and file-tab state are candidates for a future code-preview feature hook.
+ */
+
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { fetchRepos, fetchRepoTree } from "../api/github";
 import { Editor, Explorer, WindowControls, Terminal } from "#components/Index";
 import windowWrapper from "../hoc/windowWrapper";
+import useWindowStore from "#store/window";
 
 const VsCode = () => {
+  const { windows } = useWindowStore();
+  const injectedFile = windows?.vsCode?.data?.file || null;
+
   const [repos, setRepos] = useState([]);
   const [activeRepo, setActiveRepo] = useState(null);
 
-  const [tree, setTree] = useState([]);
+  const [repoTrees, setRepoTrees] = useState({});
   const [activeFile, setActiveFile] = useState(null);
   const [openTabs, setOpenTabs] = useState([]);
+
+  const [loadingRepoId, setLoadingRepoId] = useState(null);
 
   const [layout, setLayout] = useState({
     left: true,
@@ -19,41 +40,89 @@ const VsCode = () => {
     terminalBottom: false,
   });
 
-  // 📦 Load repos
+  // ================= LOAD REPOS =================
   useEffect(() => {
     fetchRepos().then(setRepos);
   }, []);
 
-  // 📁 Open repo
-  const openRepo = async (repo) => {
-    setActiveRepo(repo);
-    const data = await fetchRepoTree(repo.owner.login, repo.name);
-    setTree(data);
-  };
+  // ================= AUTO OPEN FILE FROM FINDER =================
+  useEffect(() => {
+    if (!injectedFile) return;
 
-  // 📄 Open file (inside editor only)
-  const openFile = async (file) => {
-    setActiveFile(file);
+    handleInjectedFile(injectedFile);
+  }, [injectedFile]);
 
-    if (!file.content && file.download_url) {
-      const res = await fetch(file.download_url);
-      const text = await res.text();
-      file.content = text;
+  const handleInjectedFile = async (file) => {
+    if (!file) return;
+
+    let preparedFile = { ...file };
+
+    // fetch content if github raw file
+    if (!preparedFile.content && preparedFile.download_url) {
+      try {
+        const res = await fetch(preparedFile.download_url);
+        preparedFile.content = await res.text();
+      } catch {
+        preparedFile.content = "// Unable to load file";
+      }
     }
 
+    setActiveFile(preparedFile);
+
     setOpenTabs((prev) => {
-      const exists = prev.find((t) => t.path === file.path);
+      const exists = prev.find((t) => t.path === preparedFile.path);
       if (exists) return prev;
-      return [...prev, file];
+      return [...prev, preparedFile];
     });
   };
 
-  // ❌ Close tab
+  // ================= OPEN REPO =================
+  const openRepo = async (repo) => {
+    setActiveRepo(repo);
+
+    if (repoTrees?.[repo.id]) return;
+
+    setLoadingRepoId(repo.id);
+
+    try {
+      const data = await fetchRepoTree(repo.owner.login, repo.name);
+
+      setRepoTrees((prev) => ({
+        ...prev,
+        [repo.id]: data,
+      }));
+    } finally {
+      setLoadingRepoId(null);
+    }
+  };
+
+  // ================= OPEN FILE FROM EXPLORER =================
+  const openFile = async (file) => {
+    if (!file) return;
+
+    let preparedFile = { ...file };
+
+    if (!preparedFile.content && preparedFile.download_url) {
+      const res = await fetch(preparedFile.download_url);
+      preparedFile.content = await res.text();
+    }
+
+    setActiveFile(preparedFile);
+
+    setOpenTabs((prev) => {
+      const exists = prev.find((t) => t.path === preparedFile.path);
+      if (exists) return prev;
+      return [...prev, preparedFile];
+    });
+  };
+
+  // ================= CLOSE TAB =================
   const closeTab = (path) => {
     setOpenTabs((prev) => prev.filter((t) => t.path !== path));
 
     if (activeFile?.path === path) {
-      setActiveFile(null);
+      const remaining = openTabs.filter((t) => t.path !== path);
+      setActiveFile(remaining[remaining.length - 1] || null);
     }
   };
 
@@ -66,21 +135,22 @@ const VsCode = () => {
         <h2>VS Code</h2>
 
         <div className="layout-buttons">
-          <button onClick={() =>
-            setLayout(p => ({ ...p, left: !p.left }))
-          }>
+          <button onClick={() => setLayout((p) => ({ ...p, left: !p.left }))}>
             Explorer
           </button>
 
-          <button onClick={() =>
-            setLayout(p => ({ ...p, right: !p.right }))
-          }>
+          <button onClick={() => setLayout((p) => ({ ...p, right: !p.right }))}>
             Terminal
           </button>
 
-          <button onClick={() =>
-            setLayout(p => ({ ...p, terminalBottom: !p.terminalBottom }))
-          }>
+          <button
+            onClick={() =>
+              setLayout((p) => ({
+                ...p,
+                terminalBottom: !p.terminalBottom,
+              }))
+            }
+          >
             Bottom Terminal
           </button>
         </div>
@@ -92,19 +162,19 @@ const VsCode = () => {
           "terminal-bottom": layout.terminalBottom,
         })}
       >
-
-        {/* LEFT - EXPLORER */}
+        {/* LEFT */}
         {layout.left && (
           <Explorer
             repos={repos}
-            tree={tree}
+            repoTrees={repoTrees}
             onRepoClick={openRepo}
             onFileClick={openFile}
             activeFile={activeFile}
+            loadingRepoId={loadingRepoId}
           />
         )}
 
-        {/* CENTER - EDITOR (NO WRAPPER BUG) */}
+        {/* CENTER */}
         <Editor
           activeFile={activeFile}
           openTabs={openTabs}
@@ -112,21 +182,22 @@ const VsCode = () => {
           closeTab={closeTab}
         />
 
-        {/* RIGHT TERMINAL */}
+        {/* RIGHT */}
         {layout.right && !layout.terminalBottom && (
           <Terminal repo={activeRepo} />
         )}
 
-        {/* BOTTOM TERMINAL */}
+        {/* BOTTOM */}
         {layout.terminalBottom && layout.right && (
           <div className="terminal bottom">
             <Terminal repo={activeRepo} />
           </div>
         )}
-
       </div>
     </div>
   );
 };
 
-export default windowWrapper(VsCode, "vsCode");
+const VsCodeWindow = windowWrapper(VsCode, "vsCode");
+
+export default VsCodeWindow;

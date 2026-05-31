@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import windowWrapper from "#hoc/windowWrapper";
 import { WindowControls, OptimizedImage } from "#components/Index";
 import { photosLinks, gallery } from "#constants";
-import { useWindowStore } from "#store";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Download, Heart, Share2, Grid, List } from "lucide-react";
 
+// eslint-disable-next-line react-refresh/only-export-components
 const Gallery = () => {
-  const { openWindow } = useWindowStore();
   const [activeTab, setActiveTab] = useState("Library");
   const [selectedImage, setSelectedImage] = useState(null);
   const [viewMode, setViewMode] = useState("grid");
@@ -113,7 +112,7 @@ const Gallery = () => {
               {viewMode === "grid" ? (
                 <div className="gallery-grid">
                   {gallery.map((img) => (
-                    <motion.div
+                    <Motion.div
                       key={img.id}
                       whileHover={{ y: -4 }}
                       className="gallery-item"
@@ -129,7 +128,7 @@ const Gallery = () => {
                         
                         {/* Overlay Actions */}
                         <div className="overlay-actions">
-                          <motion.button
+                          <Motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             className="zoom-btn"
@@ -139,16 +138,16 @@ const Gallery = () => {
                             }}
                           >
                             <ZoomIn size={20} className="zoom-icon" />
-                          </motion.button>
+                          </Motion.button>
                         </div>
                       </div>
                       
                       {/* Image Info */}
                       <div className="image-info">
                         <div className="info-row">
-                          <span className="image-name">Photo {img.id}</span>
+                        <span className="image-name">{img.name || `Photo ${img.id}`}</span>
                           <div className="flex items-center gap-1">
-                            <motion.button
+                            <Motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
                               onClick={(e) => {
@@ -158,17 +157,17 @@ const Gallery = () => {
                               className={`like-btn ${likedImages.has(img.id) ? 'liked' : ''}`}
                             >
                               <Heart size={16} fill={likedImages.has(img.id) ? 'currentColor' : 'none'} />
-                            </motion.button>
+                            </Motion.button>
                           </div>
                         </div>
                       </div>
-                    </motion.div>
+                    </Motion.div>
                   ))}
                 </div>
               ) : (
                 <div className="gallery-list">
                   {gallery.map((img) => (
-                    <motion.div
+                    <Motion.div
                       key={img.id}
                       whileHover={{ x: 4 }}
                       className="list-item"
@@ -181,11 +180,11 @@ const Gallery = () => {
                         />
                       </div>
                       <div className="list-info">
-                        <h4>Photo {img.id}</h4>
+                        <h4>{img.name || `Photo ${img.id}`}</h4>
                         <p>Click to view full size</p>
                       </div>
                       <div className="list-actions">
-                        <motion.button
+                        <Motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={(e) => {
@@ -195,8 +194,8 @@ const Gallery = () => {
                           className={`list-like-btn ${likedImages.has(img.id) ? 'liked' : ''}`}
                         >
                           <Heart size={18} fill={likedImages.has(img.id) ? 'currentColor' : 'none'} />
-                        </motion.button>
-                        <motion.button
+                        </Motion.button>
+                        <Motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={(e) => {
@@ -206,9 +205,9 @@ const Gallery = () => {
                           className="download-btn"
                         >
                           <Download size={18} />
-                        </motion.button>
+                        </Motion.button>
                       </div>
-                    </motion.div>
+                    </Motion.div>
                   ))}
                 </div>
               )}
@@ -232,14 +231,14 @@ const Gallery = () => {
       {/* Image Preview Modal */}
       <AnimatePresence>
         {selectedImage && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="image-modal"
             onClick={() => setSelectedImage(null)}
           >
-            <motion.div
+            <Motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -248,7 +247,7 @@ const Gallery = () => {
             >
               {/* Modal Header */}
               <div className="modal-header">
-                <h3>Photo {selectedImage.id}</h3>
+                <h3>{selectedImage.name || `Photo ${selectedImage.id}`}</h3>
                 <button
                   onClick={() => setSelectedImage(null)}
                   className="close-btn"
@@ -270,7 +269,7 @@ const Gallery = () => {
               {/* Modal Footer */}
               <div className="modal-footer">
                 <div className="footer-left">
-                  <motion.button
+                  <Motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => toggleLike(selectedImage.id)}
@@ -278,10 +277,10 @@ const Gallery = () => {
                   >
                     <Heart size={18} fill={likedImages.has(selectedImage.id) ? 'currentColor' : 'none'} />
                     <span>{likedImages.has(selectedImage.id) ? 'Liked' : 'Like'}</span>
-                  </motion.button>
+                  </Motion.button>
                 </div>
                 <div className="footer-right">
-                  <motion.button
+                  <Motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => downloadImage(selectedImage)}
@@ -289,8 +288,8 @@ const Gallery = () => {
                   >
                     <Download size={18} />
                     <span>Download</span>
-                  </motion.button>
-                  <motion.button
+                  </Motion.button>
+                  <Motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => shareImage(selectedImage)}
@@ -298,11 +297,11 @@ const Gallery = () => {
                   >
                     <Share2 size={18} />
                     <span>Share</span>
-                  </motion.button>
+                  </Motion.button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
     </>

@@ -1,16 +1,195 @@
-# React + Vite
+# Macfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Macfolio is an interactive React portfolio that presents Aditya's work through a simulated desktop and mobile operating-system experience.
 
-Currently, two official plugins are available:
+This repository is also a learning project. The goal is not only to build a polished portfolio, but to practice engineering rhythm: clear responsibilities, stable patterns, thoughtful refactoring, and useful documentation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What This App Does
 
-## React Compiler
+Macfolio has two main experiences:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Desktop users see a macOS-style interface with a dock, draggable windows, Finder, Gallery, Resume, Safari, Terminal, Contact, and VS Code-style source preview.
+- Mobile users see an iOS-style interface with widgets, app icons, app frames, and mobile-specific portfolio screens.
 
-## Expanding the ESLint configuration
+The app uses GitHub data to build an explorable project file system.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+- React
+- Vite
+- Zustand
+- GSAP
+- Framer Motion
+- Monaco Editor
+- React PDF
+- Tailwind CSS
+
+## Current Project Shape
+
+```txt
+src/
+  api/
+  components/
+  constants/
+  features/
+    finder/
+  hoc/
+  hooks/
+  mobile/
+  store/
+  utils/
+  windows/
+  App.jsx
+  main.jsx
+  index.css
+```
+
+The current structure is understandable, but the app has grown beyond a simple component-based portfolio. The long-term direction is feature-based architecture. Finder is the first feature boundary introduced in that direction.
+
+Read more:
+
+- [System Overview](docs/architecture/system-overview.md)
+- [Current Folder Structure](docs/architecture/current-folder-structure.md)
+- [Recommended Folder Structure](docs/architecture/recommended-folder-structure.md)
+
+## Engineering Direction
+
+The recommended architecture is:
+
+```txt
+src/
+  app/
+  features/
+    desktop-shell/
+    finder/
+    code-preview/
+    mobile-shell/
+    portfolio/
+  shared/
+```
+
+This should be introduced gradually. The goal is not a large rewrite. The goal is to build a repeatable pattern and improve one feature at a time.
+
+## Key Architecture Decisions
+
+- [Use feature-based architecture gradually](docs/decisions/0001-use-feature-based-architecture-gradually.md)
+- [Keep desktop and mobile shells separated](docs/decisions/0002-keep-desktop-and-mobile-shells-separated.md)
+- [Create a portfolio data boundary](docs/decisions/0003-create-a-portfolio-data-boundary.md)
+
+## Learning Notes
+
+- [Window State Management](docs/lessons/window-state-management.md)
+- [Hidden Global State](docs/lessons/hidden-global-state.md)
+- [Feature Decomposition](docs/lessons/feature-decomposition.md)
+
+## Documentation Structure
+
+```txt
+docs/
+  architecture/
+  decisions/
+  lessons/
+  diagrams/
+  tutorials/
+```
+
+Documentation is part of development in this repository. Major features should update the relevant docs.
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Run linting:
+
+```bash
+npm run lint
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## Environment Variables
+
+The app currently reads GitHub configuration from Vite environment variables.
+
+```txt
+VITE_GITHUB_USERNAME=
+VITE_GITHUB_TOKEN=
+```
+
+Important: Vite exposes `VITE_` variables to the browser. Do not place a private GitHub token here for production.
+
+For public repositories, prefer unauthenticated requests or move private access behind a backend/proxy.
+
+## Refactoring Roadmap
+
+### Phase 1: Stabilize Documentation
+
+- Replace starter README.
+- Create required docs folders.
+- Document current architecture.
+- Document recommended architecture.
+- Record architecture decisions.
+
+### Phase 2: Define Ownership
+
+- Separate shell concerns from portfolio concerns.
+- Move window configuration toward desktop shell ownership.
+- Move portfolio content into a clear portfolio boundary.
+
+### Phase 3: Refactor Finder First
+
+Finder is the best first feature to refactor because it touches UI, navigation, data shape, and file-opening behavior.
+
+Current first slice:
+
+```txt
+features/finder/
+  components/
+  utils/
+  FinderWindow.jsx
+```
+
+Future Finder improvements can add feature hooks once data ownership is clearer.
+
+### Phase 4: Create Portfolio Data Boundary
+
+- Replace hidden global work data with an explicit data owner.
+- Centralize GitHub loading and file-system mapping.
+- Share portfolio-shaped data between desktop and mobile.
+
+### Phase 5: Repeat the Pattern
+
+Apply the same rhythm to:
+
+- Code preview
+- Gallery
+- Desktop shell
+- Mobile shell
+
+## Engineering Rhythm
+
+The project should grow through repetition:
+
+```txt
+Pattern
+  -> Practice
+  -> Repetition
+  -> Refinement
+  -> Habit
+```
+
+Prefer simple, explicit, maintainable code over clever abstractions.

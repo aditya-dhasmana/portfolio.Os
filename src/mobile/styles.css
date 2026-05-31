@@ -1,0 +1,1313 @@
+.mobile-root {
+  position: fixed;
+  inset: 0;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  color: white;
+  background: #07080d;
+  font-family: "Georama", system-ui, sans-serif;
+}
+
+.mobile-home,
+.mobile-wallpaper,
+.mobile-screen-layer,
+.mobile-app-frame {
+  position: absolute;
+  inset: 0;
+}
+
+.mobile-wallpaper {
+  background-image: linear-gradient(rgba(5, 8, 16, 0.1), rgba(5, 8, 16, 0.24)), url("/images/wallpaper.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.mobile-home-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: max(env(safe-area-inset-top), 6px) 18px max(env(safe-area-inset-bottom), 10px);
+  box-sizing: border-box;
+}
+
+.mobile-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+  padding: 5px 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.mobile-status-compact {
+  color: #0f172a;
+  background: rgba(248, 250, 252, 0.92);
+}
+
+.mobile-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dynamic-island {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 12px);
+  left: 50%;
+  width: 92px;
+  height: 28px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #050507;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.mobile-clock-card {
+  margin-top: 26px;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.mobile-clock-card p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mobile-clock-card h1 {
+  margin: 2px 0 0;
+  font-size: 58px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.mobile-widget-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.mobile-widget {
+  display: flex;
+  min-width: 0;
+  min-height: 104px;
+  flex-direction: column;
+  border-radius: 24px;
+  padding: 16px;
+  border: 0;
+  color: white;
+  background: rgba(255, 255, 255, 0.17);
+  box-shadow: 0 18px 55px rgba(2, 6, 23, 0.25);
+  backdrop-filter: blur(24px);
+  text-align: left;
+}
+
+.mobile-widget span,
+.mobile-widget p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+}
+
+.mobile-widget strong {
+  display: block;
+  margin: 6px 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.mobile-widget-large strong {
+  font-size: 30px;
+}
+
+.widget-kicker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+}
+
+.todo-widget {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+}
+
+.todo-widget .widget-kicker,
+.todo-widget p {
+  color: #64748b;
+}
+
+.todo-widget strong {
+  color: #111827;
+  font-size: 25px;
+}
+
+.todo-widget ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.todo-widget li {
+  overflow: hidden;
+  color: #334155;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.todo-widget li.done {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.weather-widget {
+  grid-column: 1 / -1;
+  min-height: 156px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.46), transparent 22%),
+    linear-gradient(150deg, rgba(67, 180, 255, 0.96), rgba(19, 111, 239, 0.98) 52%, rgba(35, 85, 194, 0.98));
+}
+
+.weather-rain {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(255, 255, 255, 0.34), transparent 22%),
+    linear-gradient(135deg, rgba(68, 111, 170, 0.96), rgba(31, 41, 55, 0.96));
+}
+
+.weather-storm {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(250, 204, 21, 0.34), transparent 22%),
+    linear-gradient(135deg, rgba(55, 65, 81, 0.98), rgba(17, 24, 39, 0.98));
+}
+
+.weather-snow {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(255, 255, 255, 0.6), transparent 22%),
+    linear-gradient(135deg, rgba(125, 211, 252, 0.98), rgba(148, 163, 184, 0.98));
+}
+
+.weather-fog {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(255, 255, 255, 0.34), transparent 22%),
+    linear-gradient(135deg, rgba(148, 163, 184, 0.96), rgba(71, 85, 105, 0.96));
+}
+
+.weather-widget-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.weather-widget-left,
+.weather-widget-right {
+  min-width: 0;
+}
+
+.weather-widget-left {
+  flex: 1;
+}
+
+.weather-widget-left span {
+  display: block;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.76);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.weather-widget-left strong {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  color: white;
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 0.95;
+}
+
+.weather-widget-left small {
+  font-size: 25px;
+}
+
+.weather-widget-left p {
+  margin: 3px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.weather-widget-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 112px;
+  color: white;
+}
+
+.weather-widget-right p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: right;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.weather-widget-forecast {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.weather-widget-forecast span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border-radius: 14px;
+  padding: 6px 3px;
+  color: white;
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.weather-widget-forecast small,
+.weather-widget-forecast b {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mobile-app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px 13px;
+  margin-top: 22px;
+}
+
+.ios-app-icon {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  color: white;
+}
+
+.ios-app-icon-tile {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+.ios-app-icon-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ios-app-label {
+  max-width: 72px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.42);
+}
+
+.mobile-search-pill {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 116px;
+  height: 34px;
+  margin: auto auto 10px;
+  border: 0;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(18px);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mobile-dock {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 12px 8px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.21);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(28px);
+}
+
+.mobile-screen-layer {
+  z-index: 20;
+}
+
+.mobile-app-frame {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #111827;
+  background: #f4f6fb;
+  touch-action: pan-y;
+}
+
+.mobile-swipe-edge {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 26px;
+}
+
+.mobile-app-bar {
+  display: grid;
+  grid-template-columns: 88px 1fr 88px;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(248, 250, 252, 0.92);
+  backdrop-filter: blur(20px);
+}
+
+.mobile-back-control {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  border: 0;
+  color: #147efb;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.mobile-app-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 15px;
+}
+
+.mobile-app-title img {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.mobile-header-spacer {
+  min-width: 0;
+}
+
+.mobile-app-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-page {
+  min-height: 100%;
+  padding: 18px 16px calc(env(safe-area-inset-bottom) + 26px);
+}
+
+.mobile-section {
+  margin-bottom: 16px;
+}
+
+.mobile-section h1,
+.mobile-section h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.mobile-muted {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.mobile-hero-card,
+.mobile-terminal-card,
+.mobile-skill-card,
+.mobile-contact-hero,
+.mobile-code-panel {
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+}
+
+.mobile-hero-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+}
+
+.mobile-hero-card img {
+  width: 82px;
+  height: 82px;
+  border-radius: 22px;
+  object-fit: cover;
+}
+
+.mobile-hero-card p,
+.mobile-copy-stack p {
+  margin: 0;
+  color: #64748b;
+}
+
+.mobile-hero-card h1 {
+  margin: 4px 0 0;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.mobile-copy-stack,
+.mobile-card-list,
+.mobile-file-list,
+.mobile-repo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-photo-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.mobile-photo-strip img,
+.mobile-gallery-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.mobile-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  margin-bottom: 18px;
+  padding: 0 13px;
+  border-radius: 14px;
+  color: #64748b;
+  background: #e7ebf2;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mobile-article-card {
+  overflow: hidden;
+  border-radius: 24px;
+  color: #111827;
+  background: white;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+  text-decoration: none;
+}
+
+.mobile-article-card img {
+  width: 100%;
+  height: 178px;
+  object-fit: cover;
+}
+
+.mobile-article-card div {
+  padding: 15px;
+}
+
+.mobile-article-card p {
+  margin: 0 0 7px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.mobile-article-card h2 {
+  margin: 0 0 12px;
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.mobile-article-card span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #147efb;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mobile-social-row,
+.mobile-file-row,
+.mobile-repo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  border-radius: 18px;
+  padding: 13px;
+  color: #111827;
+  background: white;
+  text-align: left;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+}
+
+.mobile-social-row span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--accent);
+}
+
+.mobile-social-row img {
+  width: 21px;
+  height: 21px;
+}
+
+.mobile-contact-hero {
+  margin-bottom: 16px;
+  padding: 22px;
+  text-align: center;
+}
+
+.mobile-contact-hero img {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mobile-contact-hero h1 {
+  margin: 14px 0 5px;
+}
+
+.mobile-contact-hero p {
+  margin: 0;
+  color: #64748b;
+}
+
+.mobile-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
+}
+
+.mobile-gallery-grid button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.mobile-lightbox {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.mobile-lightbox button {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 16px);
+  right: 16px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: white;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.mobile-lightbox img {
+  max-width: 100%;
+  max-height: 82dvh;
+  border-radius: 22px;
+  object-fit: contain;
+}
+
+.mobile-terminal-page {
+  color: #d1fae5;
+  background: #0b1020;
+}
+
+.mobile-terminal-card {
+  padding: 16px;
+  color: #dcfce7;
+  background: #101827;
+}
+
+.mobile-terminal-card p {
+  margin: 0 0 10px;
+  color: #a7f3d0;
+  font-family: "Roboto Mono", monospace;
+}
+
+.mobile-terminal-card span {
+  color: white;
+  font-weight: 800;
+}
+
+.mobile-terminal-status {
+  color: #86efac;
+  font-size: 13px;
+}
+
+.mobile-skill-card {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.mobile-skill-card div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: white;
+}
+
+.mobile-skill-card h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.mobile-skill-card p {
+  margin: 10px 0 0;
+  color: #bbf7d0;
+  font-size: 14px;
+}
+
+.mobile-resume-page {
+  background: #dfe4ec;
+}
+
+.mobile-primary-action {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-bottom: 14px;
+  border-radius: 15px;
+  color: white;
+  background: #147efb;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.mobile-empty-state {
+  display: grid;
+  min-height: 132px;
+  place-items: center;
+  gap: 10px;
+  border-radius: 22px;
+  color: #64748b;
+  background: rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+.spin {
+  animation: mobile-spin 0.9s linear infinite;
+}
+
+@keyframes mobile-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mobile-finder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mobile-finder-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mobile-finder-header h1 {
+  margin: 2px 0 0;
+  font-size: 28px;
+}
+
+.mobile-finder-header button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: #147efb;
+  background: #dbeafe;
+  font-weight: 800;
+}
+
+.mobile-breadcrumbs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  margin-bottom: 12px;
+  color: #64748b;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.mobile-breadcrumbs span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mobile-file-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 13px;
+  color: #147efb;
+  background: #e0f2fe;
+}
+
+.mobile-file-row span:nth-child(2),
+.mobile-repo-row span {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.mobile-file-row strong,
+.mobile-repo-row strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile-file-row small,
+.mobile-repo-row small {
+  overflow: hidden;
+  color: #64748b;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile-code-page {
+  background: #101827;
+}
+
+.mobile-code-page .mobile-section h1 {
+  color: white;
+}
+
+.mobile-repo-row {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  box-shadow: none;
+}
+
+.mobile-repo-row small {
+  color: #94a3b8;
+}
+
+.mobile-repo-row.active {
+  outline: 2px solid rgba(20, 126, 251, 0.75);
+}
+
+.mobile-repo-row a {
+  color: #93c5fd;
+}
+
+.mobile-code-panel {
+  margin-top: 14px;
+  padding: 12px;
+  background: #0b1020;
+  box-shadow: none;
+}
+
+.mobile-code-files {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.mobile-code-files button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 11px;
+  color: #bfdbfe;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+}
+
+.mobile-code-files p {
+  color: #94a3b8;
+}
+
+.mobile-code-panel pre {
+  max-height: 380px;
+  overflow: auto;
+  margin: 0;
+  border-radius: 15px;
+  padding: 14px;
+  color: #dbeafe;
+  background: #050816;
+  font-family: "Roboto Mono", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.weather-app {
+  color: white;
+  background:
+    radial-gradient(circle at 84% 8%, rgba(255, 255, 255, 0.42), transparent 21%),
+    linear-gradient(160deg, #38bdf8 0%, #147efb 44%, #1d4ed8 100%);
+}
+
+.weather-app .mobile-empty-state {
+  color: white;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.weather-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 230px;
+  padding: 20px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+  backdrop-filter: blur(24px);
+}
+
+.weather-hero-left {
+  min-width: 0;
+  flex: 1;
+}
+
+.weather-hero-left span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.78);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.weather-hero-left h1 {
+  margin: 18px 0 4px;
+  font-size: 88px;
+  font-weight: 200;
+  line-height: 0.9;
+}
+
+.weather-hero-left small {
+  font-size: 38px;
+}
+
+.weather-hero-left p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.weather-hero-right {
+  display: flex;
+  flex: 0 0 102px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  text-align: center;
+}
+
+.weather-hero-right strong {
+  font-size: 14px;
+}
+
+.weather-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.weather-stats-grid div,
+.weather-hourly-card {
+  border-radius: 22px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(18px);
+}
+
+.weather-stats-grid strong {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.weather-stats-grid span {
+  display: block;
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.weather-hourly-card {
+  margin-top: 14px;
+}
+
+.weather-hourly-card h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.weather-hourly-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(58px, 1fr));
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.weather-hourly-row div {
+  display: flex;
+  min-height: 98px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 18px;
+  padding: 10px 8px;
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.weather-hourly-row span {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.todo-app {
+  background: #f4f6fb;
+}
+
+.todo-hero {
+  margin-bottom: 14px;
+  border-radius: 30px;
+  padding: 22px;
+  color: white;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.32), transparent 20%),
+    linear-gradient(135deg, #111827, #334155);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.2);
+}
+
+.todo-hero p,
+.todo-hero span {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 800;
+}
+
+.todo-hero h1 {
+  margin: 7px 0 6px;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.todo-compose {
+  display: grid;
+  grid-template-columns: 1fr 48px;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.todo-compose input {
+  min-width: 0;
+  border: 0;
+  border-radius: 17px;
+  padding: 0 15px;
+  background: white;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+}
+
+.todo-compose button,
+.todo-row button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  color: white;
+  background: #147efb;
+}
+
+.todo-compose button {
+  min-height: 48px;
+  border-radius: 17px;
+}
+
+.todo-filters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 13px;
+  padding: 5px;
+  border-radius: 17px;
+  background: #e2e8f0;
+}
+
+.todo-filters button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 13px;
+  color: #64748b;
+  background: transparent;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.todo-filters button.active {
+  color: #111827;
+  background: white;
+  box-shadow: 0 7px 16px rgba(15, 23, 42, 0.08);
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-row {
+  display: grid;
+  grid-template-columns: 38px 1fr 38px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 18px;
+  padding: 11px;
+  background: white;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
+}
+
+.todo-row button {
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+}
+
+.todo-row button:last-child {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+.todo-row span {
+  min-width: 0;
+  overflow: hidden;
+  color: #111827;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+.todo-row.done span {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+@media (max-width: 370px) {
+  .mobile-app-grid {
+    gap: 18px 8px;
+  }
+
+  .ios-app-icon-tile {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+  }
+
+  .mobile-clock-card h1 {
+    font-size: 50px;
+  }
+}
+
+@media (max-height: 760px) {
+  .mobile-home-content {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 8px;
+  }
+
+  .mobile-status {
+    min-height: 28px;
+  }
+
+  .mobile-clock-card {
+    margin-top: 12px;
+  }
+
+  .mobile-clock-card p {
+    font-size: 13px;
+  }
+
+  .mobile-clock-card h1 {
+    font-size: 44px;
+  }
+
+  .mobile-widget-grid {
+    gap: 9px;
+    margin-top: 14px;
+  }
+
+  .mobile-widget {
+    min-height: 86px;
+    border-radius: 20px;
+    padding: 12px;
+  }
+
+  .todo-widget strong {
+    font-size: 21px;
+  }
+
+  .todo-widget li {
+    font-size: 11px;
+  }
+
+  .weather-widget {
+    min-height: 124px;
+  }
+
+  .weather-widget-left strong {
+    font-size: 39px;
+  }
+
+  .weather-widget-left span,
+  .weather-widget-left p,
+  .weather-widget-right p,
+  .weather-widget-forecast small,
+  .weather-widget-forecast b {
+    font-size: 11px;
+  }
+
+  .weather-widget-right svg {
+    width: 38px;
+    height: 38px;
+  }
+
+  .weather-widget-forecast {
+    margin-top: 8px;
+  }
+
+  .mobile-app-grid {
+    gap: 10px 8px;
+    margin-top: 12px;
+  }
+
+  .ios-app-icon-tile {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+  }
+
+  .ios-app-label {
+    font-size: 10px;
+  }
+
+  .mobile-search-pill {
+    height: 30px;
+    margin-bottom: 7px;
+  }
+
+  .mobile-dock {
+    gap: 6px;
+    padding: 8px 10px 7px;
+    border-radius: 25px;
+  }
+}
+
+@media (max-height: 680px) {
+  .mobile-clock-card {
+    display: none;
+  }
+
+  .mobile-widget-grid {
+    margin-top: 12px;
+  }
+
+  .weather-widget-forecast {
+    display: none;
+  }
+
+  .mobile-search-pill {
+    display: none;
+  }
+}
