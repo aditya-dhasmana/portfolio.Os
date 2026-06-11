@@ -17,6 +17,12 @@ body {
   background-position: center;
 }
 
+*,
+*::before,
+*::after {
+  cursor: default !important;
+}
+
 @theme {
   --font-georama: "Georama", sans-serif;
   --font-roboto: "Roboto Mono", monospace;

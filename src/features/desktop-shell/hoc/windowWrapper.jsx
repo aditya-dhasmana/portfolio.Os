@@ -133,6 +133,8 @@ const windowWrapper = (Component, windowKey) => {
       const [instance] = Draggable.create(el, {
         trigger: header,
         type: "x,y",
+        cursor: "default",
+        activeCursor: "default",
 
         onPress: function (event) {
           if (event.target.closest(".no-drag")) return;
