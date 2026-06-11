@@ -7,12 +7,13 @@ main.jsx
   |
   +-- App.jsx
         |
-        +-- buildWorkLocation()
-        |     |
-        |     +-- fetchRepos()
-        |     +-- fetchRepoTree()
-        |
-        +-- window.__WORK_DATA__
+        +-- usePortfolioFileSystem()
+              |
+              +-- useDataStore
+              +-- buildWorkLocation()
+                    |
+                    +-- fetchRepos()
+                    +-- fetchRepoTree()
         |
         +-- Desktop Shell
         |     |
@@ -26,7 +27,7 @@ main.jsx
               +-- Code
 ```
 
-## Recommended Flow
+## Long-Term Flow
 
 ```txt
 main.jsx

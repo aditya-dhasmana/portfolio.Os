@@ -1,6 +1,6 @@
-import { WindowControls } from '#components/Index'
 import { socials } from '#constants'
-import windowWrapper from '#hoc/windowWrapper'
+import WindowControls from '../features/desktop-shell/components/WindowControls'
+import windowWrapper from '../features/desktop-shell/hoc/windowWrapper'
 import React from 'react'
 
 const Contact = () => {

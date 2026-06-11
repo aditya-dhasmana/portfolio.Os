@@ -1,7 +1,22 @@
+/**
+ * PURPOSE:
+ * Provide public GitHub API requests for portfolio repository data.
+ * RESPONSIBILITY:
+ * Fetch public repositories and limited public repository trees.
+ * USED BY:
+ * Portfolio data builders, desktop code preview, and mobile code views.
+ * DEPENDS ON:
+ * Vite public environment variables and the browser fetch API.
+ * SHOULD NOT HANDLE:
+ * Private GitHub authentication, secret tokens, UI state, rendering, or file preview state.
+ * SCALING NOTES:
+ * If private data or higher rate limits are needed later, move authentication behind a server/API route.
+ */
+
 const BASE_URL = "https://api.github.com";
 
-const headers = {
-  Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+const requestGitHub = async (url) => {
+  return fetch(url);
 };
 
 // ===========================================
@@ -9,10 +24,10 @@ const headers = {
 // ===========================================
 export const fetchRepos = async () => {
   try {
-    const res = await fetch(
-      `${BASE_URL}/users/${import.meta.env.VITE_GITHUB_USERNAME}/repos`,
-      { headers }
-    );
+    const username = import.meta.env.VITE_GITHUB_USERNAME;
+    if (!username) return [];
+
+    const res = await requestGitHub(`${BASE_URL}/users/${username}/repos`);
 
     if (!res.ok) return [];
 
@@ -36,9 +51,8 @@ export const fetchRepoTree = async (
   if (depth > 3) return [];
 
   try {
-    const res = await fetch(
-      `${BASE_URL}/repos/${owner}/${repo}/contents/${path}`,
-      { headers }
+    const res = await requestGitHub(
+      `${BASE_URL}/repos/${owner}/${repo}/contents/${path}`
     );
 
     if (!res.ok) return [];

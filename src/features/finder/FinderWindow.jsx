@@ -15,11 +15,11 @@
 
 import { Search, ArrowLeft } from "lucide-react";
 
-import { WindowControls } from "#components/Index";
 import { locations } from "#constants";
-import windowWrapper from "#hoc/windowWrapper";
 import { useLocationStore, useWindowStore } from "#store";
 
+import WindowControls from "../desktop-shell/components/WindowControls";
+import windowWrapper from "../desktop-shell/hoc/windowWrapper";
 import FinderBreadcrumbs from "./components/FinderBreadcrumbs";
 import FinderGrid from "./components/FinderGrid";
 import FinderSidebar from "./components/FinderSidebar";

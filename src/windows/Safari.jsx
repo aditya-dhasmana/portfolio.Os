@@ -1,6 +1,6 @@
 import React from "react";
-import { WindowControls } from "#components/Index";
-import windowWrapper from "#hoc/windowWrapper";
+import WindowControls from "../features/desktop-shell/components/WindowControls";
+import windowWrapper from "../features/desktop-shell/hoc/windowWrapper";
 import {
   ChevronLeft,
   ChevronRight,

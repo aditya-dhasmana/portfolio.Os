@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ExternalLink, FolderGit2, Loader2 } from "lucide-react";
 
-import { fetchRepos, fetchRepoTree } from "../../api/github";
+import { fetchRepos, fetchRepoTree } from "../../../api/github";
 
 const CodeApp = ({ mode = "code" }) => {
   const [repos, setRepos] = useState([]);

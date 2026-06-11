@@ -28,23 +28,32 @@ The app uses GitHub data to build an explorable project file system.
 
 ```txt
 src/
+  app/
   api/
   components/
   constants/
+    desktopApps.js
+    locations.js
+    navigation.js
+    portfolioContent.js
+    windowConfig.js
   features/
+    code-preview/
+    desktop-shell/
     finder/
+    mobile-shell/
+    portfolio/
   hoc/
   hooks/
   mobile/
   store/
   utils/
   windows/
-  App.jsx
   main.jsx
   index.css
 ```
 
-The current structure is understandable, but the app has grown beyond a simple component-based portfolio. The long-term direction is feature-based architecture. Finder is the first feature boundary introduced in that direction.
+The current structure is understandable, but the app has grown beyond a simple component-based portfolio. The long-term direction is feature-based architecture. Finder, portfolio data, desktop shell, code preview, and mobile shell are the first feature boundaries introduced in that direction.
 
 Read more:
 
@@ -75,6 +84,11 @@ This should be introduced gradually. The goal is not a large rewrite. The goal i
 - [Use feature-based architecture gradually](docs/decisions/0001-use-feature-based-architecture-gradually.md)
 - [Keep desktop and mobile shells separated](docs/decisions/0002-keep-desktop-and-mobile-shells-separated.md)
 - [Create a portfolio data boundary](docs/decisions/0003-create-a-portfolio-data-boundary.md)
+- [Split constants by ownership](docs/decisions/0004-split-constants-by-ownership.md)
+- [Extract desktop shell boundary](docs/decisions/0005-extract-desktop-shell-boundary.md)
+- [Extract code preview boundary](docs/decisions/0006-extract-code-preview-boundary.md)
+- [Lazy load shell apps](docs/decisions/0007-lazy-load-shell-apps.md)
+- [Move mobile shell boundary](docs/decisions/0008-move-mobile-shell-boundary.md)
 
 ## Learning Notes
 
@@ -127,12 +141,11 @@ The app currently reads GitHub configuration from Vite environment variables.
 
 ```txt
 VITE_GITHUB_USERNAME=
-VITE_GITHUB_TOKEN=
 ```
 
-Important: Vite exposes `VITE_` variables to the browser. Do not place a private GitHub token here for production.
+Important: Vite exposes `VITE_` variables to the browser. Do not place private GitHub tokens, API keys, or secrets in `VITE_` variables.
 
-For public repositories, prefer unauthenticated requests or move private access behind a backend/proxy.
+GitHub repository data is fetched through public unauthenticated requests. If private repositories or higher rate limits are needed later, move GitHub authentication behind a backend/API route so the token stays on the server.
 
 ## Refactoring Roadmap
 
@@ -170,6 +183,16 @@ Future Finder improvements can add feature hooks once data ownership is clearer.
 - Replace hidden global work data with an explicit data owner.
 - Centralize GitHub loading and file-system mapping.
 - Share portfolio-shaped data between desktop and mobile.
+
+Current first slice:
+
+```txt
+features/portfolio/
+  hooks/
+  utils/
+```
+
+The old `src/utils/buildWorkLocation.js` path remains as a compatibility bridge.
 
 ### Phase 5: Repeat the Pattern
 

@@ -171,6 +171,20 @@ body {
   }
 }
 
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
   #window-controls {
 
     position: relative;
@@ -660,12 +674,6 @@ body {
           font-size: 10px;
           color: #888;
           animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-          0% { opacity: 0.2; }
-          50% { opacity: 1; }
-          100% { opacity: 0.2; }
         }
       }
 

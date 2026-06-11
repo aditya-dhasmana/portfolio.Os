@@ -115,18 +115,19 @@ This model is shared by Finder, mobile Projects, and code preview features. That
 ```txt
 App.jsx
   |
-  +-- buildWorkLocation()
-  |     |
-  |     +-- fetchRepos()
-  |     +-- fetchRepoTree()
-  |
-  +-- window.__WORK_DATA__
+  +-- usePortfolioFileSystem()
+        |
+        +-- useDataStore
+        +-- buildWorkLocation()
+              |
+              +-- fetchRepos()
+              +-- fetchRepoTree()
   |
   +-- desktop Finder / Home
   +-- mobile Projects
 ```
 
-This works, but `window.__WORK_DATA__` is hidden global state. It makes the data available, but it also makes ownership unclear.
+The portfolio file system now has an explicit owner. `usePortfolioFileSystem()` coordinates loading and `useDataStore` stores the loaded Work folder.
 
 ## Recommended Data Flow
 

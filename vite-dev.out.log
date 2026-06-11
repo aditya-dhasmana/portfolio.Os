@@ -1,17 +1,73 @@
-[32m✔[0m [33mConsole Ninja[0m extension is connected to [33mVite[0m, see [36mhttps://tinyurl.com/2vt8jxzw[0m
-[2m2:57:40 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+[2m11:10:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
 
-  [32m[1mVITE[22m v8.0.3[39m  [2mready in [0m[1m608[22m[2m[0m ms[22m
+  [32m[1mVITE[22m v8.0.3[39m  [2mready in [0m[1m1063[22m[2m[0m ms[22m
 
   [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
-[2m3:13:50 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/mobile/apps/Projects.jsx, /src/windows/VsCode.jsx, /src/mobile/apps/Code.jsx[22m
-[2m3:13:50 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Gallery.jsx[22m
-[2m3:13:50 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/ErrorBoundary.jsx[22m
-[2m3:13:50 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/About.jsx[22m
-[2m3:13:50 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Resume.jsx[22m
-[2m3:36:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/mobile/apps/Projects.jsx, /src/windows/VsCode.jsx, /src/mobile/apps/Code.jsx[22m
-[2m3:36:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Gallery.jsx[22m
-[2m3:36:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/ErrorBoundary.jsx[22m
-[2m3:36:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/About.jsx[22m
-[2m3:36:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Resume.jsx[22m
-[2m3:36:37 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m11:23:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/mobile/apps/Projects.jsx, /src/components/Home.jsx, /src/windows/TextApp.jsx, /src/windows/ImageApp.jsx, /src/features/finder/FinderWindow.jsx, /src/components/WindowControls.jsx, /src/windows/VsCode.jsx, /src/components/Navbar.jsx, /src/components/Dock.jsx, /src/windows/Safari.jsx, /src/windows/Terminal.jsx, /src/windows/Gallery.jsx, /src/windows/Contact.jsx, /src/windows/Resume.jsx, /src/mobile/apps/About.jsx, /src/mobile/apps/Gallery.jsx, /src/mobile/apps/Articles.jsx, /src/mobile/apps/Contact.jsx, /src/mobile/apps/Skills.jsx[22m
+[2m11:23:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/mobile/apps/Projects.jsx, /src/components/Home.jsx, /src/windows/TextApp.jsx, /src/windows/ImageApp.jsx, /src/features/finder/FinderWindow.jsx, /src/components/WindowControls.jsx, /src/windows/VsCode.jsx, /src/components/Navbar.jsx, /src/components/Dock.jsx, /src/windows/Safari.jsx, /src/windows/Terminal.jsx, /src/windows/Gallery.jsx, /src/windows/Contact.jsx, /src/windows/Resume.jsx, /src/mobile/apps/About.jsx, /src/mobile/apps/Gallery.jsx, /src/mobile/apps/Articles.jsx, /src/mobile/apps/Contact.jsx, /src/mobile/apps/Skills.jsx[22m
+[2m11:23:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/mobile/apps/Projects.jsx, /src/components/Home.jsx, /src/windows/TextApp.jsx, /src/windows/ImageApp.jsx, /src/features/finder/FinderWindow.jsx, /src/components/WindowControls.jsx, /src/windows/VsCode.jsx, /src/components/Navbar.jsx, /src/components/Dock.jsx, /src/windows/Safari.jsx, /src/windows/Terminal.jsx, /src/windows/Gallery.jsx, /src/windows/Contact.jsx, /src/windows/Resume.jsx[22m
+[2m11:23:12 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/mobile/apps/Projects.jsx, /src/components/Home.jsx, /src/windows/TextApp.jsx, /src/windows/ImageApp.jsx, /src/features/finder/FinderWindow.jsx, /src/components/WindowControls.jsx, /src/windows/VsCode.jsx, /src/components/Navbar.jsx, /src/components/Dock.jsx, /src/windows/Safari.jsx, /src/windows/Terminal.jsx, /src/windows/Gallery.jsx, /src/windows/Contact.jsx, /src/windows/Resume.jsx[22m
+[2m11:25:19 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Dock.jsx[22m
+[2m11:25:19 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Dock.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Navbar.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Navbar.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Home.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Home.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/WindowControls.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/WindowControls.jsx[22m
+[2m11:25:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Safari.jsx, /src/windows/Terminal.jsx, /src/windows/TextApp.jsx, /src/windows/ImageApp.jsx, /src/windows/Gallery.jsx, /src/windows/VsCode.jsx, /src/windows/Contact.jsx, /src/windows/Resume.jsx, /src/features/finder/FinderWindow.jsx[22m
+[2m11:25:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Safari.jsx, /src/windows/Terminal.jsx, /src/windows/TextApp.jsx, /src/windows/ImageApp.jsx, /src/windows/Gallery.jsx, /src/windows/VsCode.jsx, /src/windows/Contact.jsx, /src/windows/Resume.jsx, /src/features/finder/FinderWindow.jsx[22m
+[2m11:25:30 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:29:25 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/VsCode.jsx[22m
+[2m11:29:25 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/VsCode.jsx[22m
+[2m11:29:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Editor.jsx[22m
+[2m11:29:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Editor.jsx[22m
+[2m11:29:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Explorer.jsx[22m
+[2m11:29:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Explorer.jsx[22m
+[2m11:29:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Terminal.jsx[22m
+[2m11:29:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/Terminal.jsx[22m
+[2m11:31:52 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:31:59 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:32:45 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:33:03 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:33:44 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/About.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Articles.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Contact.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Gallery.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/MobileApp.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Resume.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Skills.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Todo.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Weather.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/components/WeatherIcon.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/MobileApp.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/shell/AppFrame.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/shell/AppIcon.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/shell/HomeScreen.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/shell/StatusBar.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/mobile/data/apps.js[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/mobile/data/todos.js[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/mobile/data/weather.js[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/styles.css[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Code.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/apps/Projects.jsx[22m
+[2m11:35:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/mobile/shell/index.js[22m
+[2m11:35:22 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/mobile/MobileApp.jsx[22m
+[2m11:35:23 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:36:54 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:36:54 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m11:36:54 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.jsx[22m
+[2m11:38:38 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/features/finder/FinderWindow.jsx[22m
+[2m11:38:38 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/TextApp.jsx[22m
+[2m11:38:38 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Gallery.jsx[22m
+[2m11:38:38 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/ImageApp.jsx[22m
+[2m11:38:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Safari.jsx[22m
+[2m11:38:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Resume.jsx[22m
+[2m11:38:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Contact.jsx[22m
+[2m11:38:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/windows/Terminal.jsx[22m
+[2m11:39:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.jsx, /src/index.css[22m
+[2m11:39:38 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/App.jsx, /src/index.css[22m
+[2m11:40:10 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/features/code-preview/components/Editor.jsx[22m
+[2m11:40:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/features/code-preview/components/Explorer.jsx[22m
+[2m12:28:04 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m

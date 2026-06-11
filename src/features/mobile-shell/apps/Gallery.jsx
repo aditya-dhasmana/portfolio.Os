@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { motion } from "framer-motion";
 
 import { gallery } from "#constants";
 

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronRight, ExternalLink, FileText, Folder, Image, Search } from "lucide-react";
 
-import { buildWorkLocation } from "../../utils/buildWorkLocation";
+import { usePortfolioFileSystem } from "../../portfolio/hooks/usePortfolioFileSystem";
 import { locations } from "#constants";
 
 const CODE_FILE_TYPES = ["js", "jsx", "ts", "tsx", "css", "html", "json", "md", "txt"];
@@ -17,16 +17,29 @@ const ProjectsApp = () => {
   const [current, setCurrent] = useState(null);
   const [history, setHistory] = useState([]);
   const [status, setStatus] = useState("loading");
+  const { work, loadPortfolioFileSystem } = usePortfolioFileSystem();
 
   useEffect(() => {
     let alive = true;
 
-    buildWorkLocation()
-      .then((work) => {
+    const applyWork = (nextWork) => {
+      if (!alive) return;
+      setRoot(nextWork);
+      setCurrent(nextWork);
+      setStatus("ready");
+    };
+
+    if (work) {
+      applyWork(work);
+      return () => {
+        alive = false;
+      };
+    }
+
+    loadPortfolioFileSystem()
+      .then((nextWork) => {
         if (!alive) return;
-        setRoot(work);
-        setCurrent(work);
-        setStatus("ready");
+        applyWork(nextWork);
       })
       .catch(() => {
         if (!alive) return;
@@ -38,7 +51,7 @@ const ProjectsApp = () => {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [loadPortfolioFileSystem, work]);
 
   const trail = useMemo(() => {
     const items = [];

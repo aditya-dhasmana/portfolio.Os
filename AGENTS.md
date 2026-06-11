@@ -551,3 +551,130 @@ What happens if the application grows 10x?
 What happens if a team of 20 developers works on this repository?
 
 Teach engineering, not just coding.
+
+# TEXTBOOK GENERATION MODE
+
+This repository is also used to generate a complete software engineering textbook.
+
+When explicitly asked to generate textbook content:
+
+## PHASE 1 — REPOSITORY VERIFICATION
+
+Before teaching:
+
+1. Read actual source files.
+2. Read documentation files.
+3. Read architecture documents.
+4. Read decision records.
+5. Read lessons learned documents.
+
+Provide:
+
+* Total files discovered
+* Total files read
+* Files not read
+* Repository coverage percentage
+
+Do not infer code.
+
+Do not reconstruct code.
+
+Only use actual repository contents.
+
+---
+
+## PHASE 2 — KNOWLEDGE GRAPH
+
+Generate:
+
+* Architecture map
+* Dependency graph
+* Component hierarchy
+* State management flow
+* Window management flow
+* Mobile architecture flow
+* Feature relationship map
+
+---
+
+## PHASE 3 — TEXTBOOK CREATION
+
+Teach from:
+
+Absolute Beginner
+→ Intermediate
+→ Advanced
+→ Enterprise
+
+For every concept explain:
+
+WHAT
+WHY
+WHEN
+WHERE
+HOW
+
+---
+
+## PHASE 4 — FILE ANALYSIS
+
+For every file:
+
+* Purpose
+* Responsibility
+* Dependencies
+* Imports
+* Exports
+* Execution flow
+* Design decisions
+* Alternatives
+* Scaling considerations
+
+Never skip files.
+
+---
+
+## PHASE 5 — LINE-BY-LINE MODE
+
+When requested:
+
+Explain every line.
+
+Include:
+
+* Syntax explanation
+* Runtime behavior
+* Memory implications
+* React lifecycle implications
+* Browser implications
+* Alternative implementations
+
+---
+
+## PHASE 6 — PROJECT REBUILD MODE
+
+After understanding the repository:
+
+Generate a complete course that rebuilds the entire application from scratch.
+
+Explain:
+
+* Installation
+* Environment setup
+* Folder structure
+* Components
+* State management
+* Styling
+* Features
+* Performance
+* Deployment
+
+---
+
+## IMPORTANT
+
+If repository coverage is below 100%:
+
+Do not claim full understanding of the project.
+
+Explicitly state what remains unread.

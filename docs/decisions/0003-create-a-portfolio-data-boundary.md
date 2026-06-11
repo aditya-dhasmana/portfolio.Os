@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
@@ -14,15 +14,15 @@ GitHub and portfolio data are currently used by multiple places:
 - Mobile Projects
 - Mobile Code
 
-The project currently uses `buildWorkLocation()` and `window.__WORK_DATA__` to share work data.
+The project previously used `buildWorkLocation()` and `window.__WORK_DATA__` to share work data.
 
-This works, but it creates hidden coupling.
+That worked, but it created hidden coupling.
 
 ## Decision
 
 Create a portfolio data boundary that owns loading, caching, and mapping data.
 
-The target shape should be:
+The first implemented shape is:
 
 ```txt
 features/portfolio/
@@ -30,11 +30,11 @@ features/portfolio/
     usePortfolioFileSystem.js
   utils/
     buildWorkLocation.js
-    attachParents.js
-    mapGithubRepoToFolder.js
-  data/
-    staticPortfolioData.js
+store/
+  useDataStore.js
 ```
+
+`src/utils/buildWorkLocation.js` remains as a temporary compatibility export.
 
 ## Why
 

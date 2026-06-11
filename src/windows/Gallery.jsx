@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import windowWrapper from "#hoc/windowWrapper";
-import { WindowControls, OptimizedImage } from "#components/Index";
+import windowWrapper from "../features/desktop-shell/hoc/windowWrapper";
+import WindowControls from "../features/desktop-shell/components/WindowControls";
+import { OptimizedImage } from "#components/Index";
 import { photosLinks, gallery } from "#constants";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Download, Heart, Share2, Grid, List } from "lucide-react";

@@ -4,18 +4,22 @@
 
 ```txt
 src/
+  app/
   api/
   components/
   constants/
   features/
+    code-preview/
+    desktop-shell/
     finder/
+    mobile-shell/
+    portfolio/
   hoc/
   hooks/
   mobile/
   store/
   utils/
   windows/
-  App.jsx
   main.jsx
   index.css
 ```
@@ -28,15 +32,15 @@ The current structure is mostly organized by technical type:
 - `store/` contains Zustand stores.
 - `api/` contains GitHub API functions.
 - `utils/` contains helper logic.
-- `constants/` contains configuration and content data.
+- `constants/` contains focused configuration and content modules.
 
-This structure is understandable for a small project, but the app has grown into multiple product features. The first feature boundary now exists at `src/features/finder`. The next architecture step is to keep organizing by responsibility, one feature at a time.
+This structure is understandable for a small project, but the app has grown into multiple product features. Feature boundaries now exist for Finder, portfolio data, desktop shell, code preview, and mobile shell. The next architecture step is to keep organizing by responsibility, one feature at a time.
 
 ## What Works Well
 
 ### Mobile is already isolated
 
-`src/mobile/` is a good boundary. It keeps mobile shell and apps separate from desktop windows.
+`src/features/mobile-shell/` is a good boundary. It keeps mobile shell and apps separate from desktop windows.
 
 This is a useful pattern:
 
@@ -49,6 +53,8 @@ feature/
 ```
 
 The same kind of ownership can be introduced elsewhere.
+
+`src/mobile/MobileApp.jsx` remains as a compatibility export.
 
 ### Finder has started moving into a feature boundary
 
@@ -65,11 +71,37 @@ features/finder/
 
 The old `src/windows/Finder.jsx` path remains as a compatibility export so the rest of the app does not need to change immediately.
 
+### Desktop shell has a feature boundary
+
+`src/features/desktop-shell/` now owns desktop operating-system behavior.
+
+```txt
+features/desktop-shell/
+  components/
+  config/
+  hoc/
+  store/
+```
+
+The old component, HOC, store, and constants paths remain as compatibility exports while the app migrates gradually.
+
+### Code preview has a feature boundary
+
+`src/features/code-preview/` now owns the VS Code-style source preview workflow.
+
+```txt
+features/code-preview/
+  components/
+  windows/
+```
+
+The old `src/components/Editor.jsx`, `src/components/Explorer.jsx`, `src/components/Terminal.jsx`, and `src/windows/VsCode.jsx` paths remain as compatibility exports.
+
 ### Stores are separated by concern
 
 Window state and Finder location state are already separate:
 
-- `store/window.js`
+- `features/desktop-shell/store/windowStore.js`
 - `store/location.js`
 
 That is a good instinct. Each store has a specific job.
@@ -99,7 +131,7 @@ These are different responsibilities. As the app grows, this file will become ha
 
 ### `App.jsx` knows too much
 
-`App.jsx` currently:
+`src/app/App.jsx` currently:
 
 - Chooses desktop or mobile.
 - Preloads work data.
@@ -108,11 +140,11 @@ These are different responsibilities. As the app grows, this file will become ha
 - Registers desktop windows.
 - Renders global shell components.
 
-This is acceptable while the project is small, but it should become thinner over time.
+This is acceptable while the project is small, but it should stay thin over time.
 
-### Desktop window code is split across many places
+### Desktop window code used to be split across many places
 
-Desktop shell behavior is spread across:
+Desktop shell behavior used to be spread across:
 
 - `App.jsx`
 - `components/Dock.jsx`
@@ -122,7 +154,7 @@ Desktop shell behavior is spread across:
 - `store/window.js`
 - `constants/index.js`
 
-These files all participate in one feature: the desktop shell. That feature should eventually have clearer ownership.
+These files all participate in one feature: the desktop shell. The first ownership move is now complete under `src/features/desktop-shell/`.
 
 ### GitHub data is requested from multiple features
 
@@ -135,12 +167,27 @@ GitHub data is used by:
 
 This creates repeated loading logic. The app needs one reusable GitHub/portfolio data boundary.
 
+### Constants were previously mixed together
+
+The constants layer has started moving from one large file into focused ownership modules:
+
+```txt
+src/constants/
+  desktopApps.js
+  locations.js
+  navigation.js
+  portfolioContent.js
+  windowConfig.js
+```
+
+`src/constants/index.js` remains as the barrel export so existing imports stay stable.
+
 ### CSS is large and global
 
 Current CSS files are large:
 
 - `src/index.css`
-- `src/mobile/styles.css`
+- `src/features/mobile-shell/styles.css`
 
 This is not automatically wrong, but large global CSS requires naming discipline. As features grow, styles should move closer to the feature they support or follow a documented naming convention.
 

@@ -1,6 +1,6 @@
 import React from "react";
-import windowWrapper from "#hoc/windowWrapper";
-import { WindowControls } from "#components/Index";
+import windowWrapper from "../features/desktop-shell/hoc/windowWrapper";
+import WindowControls from "../features/desktop-shell/components/WindowControls";
 import { useWindowStore } from "#store";
 
 const TextApp = () => {

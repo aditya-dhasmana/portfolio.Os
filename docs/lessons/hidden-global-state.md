@@ -4,7 +4,7 @@
 
 Hidden global state is data stored somewhere that many files can access without an explicit dependency.
 
-In the current app, work data is placed on:
+Earlier in the app, work data was placed on:
 
 ```txt
 window.__WORK_DATA__
@@ -55,6 +55,14 @@ usePortfolioFileSystem()
 ```
 
 Then features can depend on the hook or provider instead of the global window object.
+
+This first slice now exists in:
+
+```txt
+src/features/portfolio/hooks/usePortfolioFileSystem.js
+src/features/portfolio/utils/buildWorkLocation.js
+src/store/useDataStore.js
+```
 
 ## Beginner Explanation
 

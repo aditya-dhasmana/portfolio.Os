@@ -25,6 +25,8 @@ src/
   features/
     desktop-shell/
       components/
+      config/
+      hoc/
       store/
       utils/
       constants.js
