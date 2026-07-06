@@ -16,7 +16,7 @@
 import { Search, ArrowLeft } from "lucide-react";
 
 import { locations } from "#constants";
-import { useLocationStore, useWindowStore } from "#store";
+import { useDataStore, useLocationStore, useWindowStore } from "#store";
 
 import WindowControls from "../desktop-shell/components/WindowControls";
 import windowWrapper from "../desktop-shell/hoc/windowWrapper";
@@ -30,14 +30,17 @@ import {
 
 const Finder = () => {
   const { openWindow } = useWindowStore();
+  const { work } = useDataStore();
 
   const {
-    activeLocation,
-    setActiveLocation,
+    currentPath,
+    navigateTo,
     goBackLocation,
   } = useLocationStore();
 
-  if (!activeLocation) {
+  const currentLocation = currentPath[currentPath.length - 1];
+
+  if (!currentLocation) {
     return (
       <div className="flex items-center justify-center w-full h-full">
         Loading...
@@ -48,8 +51,8 @@ const Finder = () => {
   const openItem = (item) => {
     const action = getFinderOpenAction(item);
 
-    if (action.type === FINDER_OPEN_ACTIONS.SET_LOCATION) {
-      setActiveLocation(action.location);
+    if (action.type === FINDER_OPEN_ACTIONS.NAVIGATE_TO_FOLDER) {
+      navigateTo([...currentPath, action.folder]);
       return;
     }
 
@@ -64,14 +67,13 @@ const Finder = () => {
   };
 
   const favorites = [
-    activeLocation?.type === "work" ? activeLocation : locations.work,
+    work || locations.work,
     locations.about,
     locations.gallery,
     locations.resume,
   ];
 
-  const projects =
-    activeLocation?.type === "work" ? activeLocation.children : [];
+  const projects = work?.children || [];
 
   return (
     <>
@@ -84,20 +86,20 @@ const Finder = () => {
       </div>
 
       <FinderBreadcrumbs
-        activeLocation={activeLocation}
-        onSelectLocation={setActiveLocation}
+        currentPath={currentPath}
+        onNavigate={navigateTo}
       />
 
       <div className="bg-white flex h-full">
         <FinderSidebar
           favorites={favorites}
           projects={projects}
-          activeLocation={activeLocation}
-          onSelectLocation={setActiveLocation}
+          currentPath={currentPath}
+          onNavigate={navigateTo}
         />
 
         <FinderGrid
-          items={activeLocation?.children}
+          items={currentLocation.children}
           onOpenItem={openItem}
         />
       </div>

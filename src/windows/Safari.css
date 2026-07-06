@@ -1,0 +1,396 @@
+/**
+ * PURPOSE:
+ * Style the Safari portfolio chat without leaking visual rules into other windows.
+ * RESPONSIBILITY:
+ * Define the toolbar, chat layout, messages, cards, composer, and compact-window behavior.
+ * USED BY:
+ * src/windows/Safari.jsx.
+ * DEPENDS ON:
+ * The Safari component class names and the existing window wrapper dimensions.
+ * SHOULD NOT HANDLE:
+ * Shared desktop styling, other app windows, or JavaScript behavior.
+ * SCALING NOTES:
+ * Keep Safari-specific responsive rules here; promote tokens only after repeated use elsewhere.
+ */
+
+#safari .portfolio-safari {
+  --safari-ink: #15182a;
+  --safari-muted: #6e7590;
+  --safari-purple: #6556f6;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  color: var(--safari-ink);
+  background: #fdfdff;
+  font-family: Inter, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+#safari:not(.window-full) {
+  max-height: calc(100vh - 116px);
+}
+
+#safari.window-full {
+  max-height: 100vh;
+}
+
+#safari .safari-toolbar {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(320px, 1.35fr) minmax(150px, 1fr);
+  flex: 0 0 58px;
+  gap: 18px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e4eb;
+  border-radius: 0;
+  background: rgba(248, 249, 252, 0.98);
+  color: #8390a8;
+}
+
+#safari .safari-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+}
+
+#safari .safari-toolbar__actions { justify-content: flex-end; }
+#safari .safari-toolbar .icon { width: 17px; height: 17px; }
+
+#safari .safari-toolbar__address {
+  display: grid;
+  grid-template-columns: 18px 1fr 18px;
+  align-items: center;
+  min-width: 0;
+  padding: 0 14px;
+  border: 1px solid #d8dce5;
+  border-radius: 9px;
+  background: #fff;
+  color: #1f2433;
+  box-shadow: 0 1px 2px rgba(30, 35, 50, 0.04);
+}
+
+#safari .safari-toolbar__address span {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#safari .portfolio-chat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 14px clamp(18px, 4.5vw, 54px) 8px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(109, 91, 255, 0.06), transparent 31%),
+    linear-gradient(180deg, #ffffff 0%, #fdfdff 100%);
+}
+
+#safari .portfolio-chat__intro { flex: 0 0 auto; text-align: center; }
+
+#safari .portfolio-avatar {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 3px;
+  place-items: center;
+  border: 1px solid #dfe2f1;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #dce7ff, #c8c5ff);
+  box-shadow: 0 8px 22px rgba(73, 74, 127, 0.15);
+  font-size: 29px;
+}
+
+#safari .portfolio-chat__intro h1 {
+  margin: 0;
+  font-size: clamp(23px, 2.2vw, 29px);
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+#safari .portfolio-chat__intro h1 span:first-child { color: var(--safari-purple); }
+
+#safari .portfolio-chat__intro p {
+  max-width: 590px;
+  margin: 4px auto 0;
+  color: #5f6881;
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+#safari .portfolio-prompts {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  gap: 9px;
+  margin: 13px 0;
+}
+
+#safari .portfolio-prompts button,
+#safari .portfolio-response__actions button,
+#safari .portfolio-response__actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #e2e4ec;
+  border-radius: 999px;
+  background: #fff;
+  color: #34394f;
+  box-shadow: 0 3px 10px rgba(46, 50, 74, 0.06);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+#safari .portfolio-prompts button {
+  min-height: 36px;
+  padding: 7px 13px;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+#safari .portfolio-prompts button:hover,
+#safari .portfolio-response__actions button:hover,
+#safari .portfolio-response__actions a:hover {
+  border-color: #bdb7ff;
+  box-shadow: 0 6px 16px rgba(83, 73, 195, 0.11);
+  transform: translateY(-1px);
+}
+
+#safari .portfolio-prompts svg { width: 16px; height: 16px; color: var(--safari-purple); }
+
+#safari .portfolio-transcript {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  padding: 2px 4px 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #d7d9e5 transparent;
+  scrollbar-width: thin;
+}
+
+#safari .portfolio-message--user {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  align-self: flex-end;
+  max-width: 62%;
+}
+
+#safari .portfolio-message--user .portfolio-message__bubble {
+  padding: 9px 15px;
+  border-radius: 15px 15px 3px 15px;
+  background: linear-gradient(135deg, #7466fa, #5d50ef);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(91, 77, 227, 0.19);
+}
+
+#safari .portfolio-message small,
+#safari .portfolio-response small {
+  display: block;
+  margin-top: 5px;
+  color: #8a91a8;
+  font-size: 9px;
+}
+
+#safari .portfolio-response { display: flex; flex-direction: column; gap: 10px; }
+
+#safari .portfolio-response__message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 58%;
+}
+
+#safari .portfolio-response__avatar {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #dfe2ef;
+  border-radius: 50%;
+  background: #dfe6ff;
+  font-size: 22px;
+}
+
+#safari .portfolio-response__message .portfolio-message__bubble {
+  padding: 10px 14px;
+  border: 1px solid #e3e5ed;
+  border-radius: 4px 15px 15px 15px;
+  background: #fff;
+  color: #35394b;
+  box-shadow: 0 5px 15px rgba(45, 50, 75, 0.06);
+  font-size: 12px;
+  line-height: 1.48;
+}
+
+#safari .portfolio-cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#safari .portfolio-card {
+  display: flex;
+  min-height: 146px;
+  min-width: 0;
+  flex-direction: column;
+  padding: 11px;
+  border: 1px solid #e1e4ec;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 5px 14px rgba(37, 42, 65, 0.055);
+}
+
+#safari .portfolio-card__heading { display: flex; align-items: center; gap: 8px; }
+
+#safari .portfolio-card__heading > span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 8px;
+  background: #f0edff;
+  color: #6655ed;
+}
+
+#safari .portfolio-card__heading svg { width: 16px; height: 16px; }
+
+#safari .portfolio-card h2 {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#safari .portfolio-card > p {
+  display: -webkit-box;
+  margin: 9px 0 8px;
+  overflow: hidden;
+  color: #60677c;
+  font-size: 10px;
+  line-height: 1.42;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+#safari .portfolio-card__tags { color: #777e92; font-size: 9px; }
+
+#safari .portfolio-card > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 29px;
+  margin-top: auto;
+  border-radius: 7px;
+  background: #f0edff;
+  color: #5d4bea;
+  font-size: 10px;
+  font-weight: 700;
+  transition: filter 150ms ease, transform 150ms ease;
+}
+
+#safari .portfolio-card > button:hover { filter: saturate(1.18); transform: translateY(-1px); }
+#safari .portfolio-card > button svg { width: 13px; height: 13px; }
+#safari .portfolio-card--green .portfolio-card__heading > span,
+#safari .portfolio-card--green > button { background: #eaf8ee; color: #269247; }
+#safari .portfolio-card--blue .portfolio-card__heading > span,
+#safari .portfolio-card--blue > button { background: #eaf3ff; color: #3477db; }
+#safari .portfolio-card--orange .portfolio-card__heading > span,
+#safari .portfolio-card--orange > button { background: #fff0e8; color: #ed6d34; }
+#safari .portfolio-card--pink .portfolio-card__heading > span,
+#safari .portfolio-card--pink > button { background: #ffedf6; color: #e73e91; }
+
+#safari .portfolio-response__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding-left: 52px;
+}
+
+#safari .portfolio-response__actions button,
+#safari .portfolio-response__actions a { padding: 6px 10px; font-size: 10px; font-weight: 650; }
+#safari .portfolio-response__actions svg { width: 13px; height: 13px; color: var(--safari-purple); }
+
+#safari .portfolio-composer {
+  display: grid;
+  grid-template-columns: 22px 1fr 40px;
+  flex: 0 0 54px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+  padding: 6px 8px 6px 15px;
+  border: 1px solid #dfe2eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 7px 20px rgba(40, 45, 70, 0.1);
+}
+
+#safari .portfolio-composer > svg { width: 18px; height: 18px; color: #8992a8; }
+
+#safari .portfolio-composer input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #22263a;
+  font-size: 12px;
+}
+
+#safari .portfolio-composer input::placeholder { color: #9aa2b8; }
+
+#safari .portfolio-composer button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7867ff, #5a4ceb);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(91, 75, 232, 0.28);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+#safari .portfolio-composer button:hover:not(:disabled) { transform: scale(1.04); }
+#safari .portfolio-composer button:disabled { cursor: default; opacity: 0.42; }
+#safari .portfolio-composer button svg { width: 17px; height: 17px; }
+
+#safari .portfolio-chat footer {
+  flex: 0 0 auto;
+  padding-top: 5px;
+  color: #717990;
+  font-size: 9px;
+  text-align: center;
+}
+
+#safari .portfolio-chat footer span { margin: 0 3px; color: #a4a9b8; }
+
+@media (max-width: 980px) {
+  #safari .safari-toolbar { grid-template-columns: auto minmax(260px, 1fr) auto; }
+  #safari .safari-toolbar__muted { display: none; }
+  #safari .portfolio-prompts { justify-content: flex-start; overflow-x: auto; }
+  #safari .portfolio-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-height: 760px) {
+  #safari .portfolio-chat { padding-top: 9px; }
+  #safari .portfolio-avatar { width: 44px; height: 44px; font-size: 23px; }
+  #safari .portfolio-chat__intro p { display: none; }
+  #safari .portfolio-prompts { margin: 9px 0; }
+}

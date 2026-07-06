@@ -1,111 +1,130 @@
 /**
  * PURPOSE:
- * Provide public GitHub API requests for portfolio repository data.
+ * Provide browser-safe access to Macfolio's GitHub backend endpoints.
  * RESPONSIBILITY:
- * Fetch public repositories and limited public repository trees.
+ * Request repositories, build limited repository trees, and load explicitly selected file content.
  * USED BY:
  * Portfolio data builders, desktop code preview, and mobile code views.
  * DEPENDS ON:
- * Vite public environment variables and the browser fetch API.
+ * VITE_API_BASE_URL and the browser fetch API.
  * SHOULD NOT HANDLE:
- * Private GitHub authentication, secret tokens, UI state, rendering, or file preview state.
+ * GitHub tokens, direct GitHub requests, UI state, rendering, or portfolio fallback selection.
  * SCALING NOTES:
- * If private data or higher rate limits are needed later, move authentication behind a server/API route.
+ * Keep backend response normalization here so UI features remain independent of transport details.
  */
 
-const BASE_URL = "https://api.github.com";
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000").replace(
+  /\/$/,
+  "",
+);
+const MAX_TREE_DEPTH = 3;
+let reposRequest = null;
+const treeRequests = new Map();
 
-const requestGitHub = async (url) => {
-  return fetch(url);
+const requestApi = async (path) => {
+  const response = await fetch(`${API_BASE_URL}${path}`);
+
+  if (!response.ok) {
+    throw new Error("Live GitHub data temporarily unavailable.");
+  }
+
+  return response.json();
 };
 
-// ===========================================
-// FETCH USER REPOS
-// ===========================================
+const normalizeRepo = (repo) => {
+  const ownerName = repo.full_name?.split("/")[0] || "";
+
+  return {
+    ...repo,
+    id: repo.full_name,
+    owner: { login: ownerName },
+  };
+};
+
 export const fetchRepos = async () => {
+  if (!reposRequest) {
+    reposRequest = requestApi("/api/github/repos")
+      .then((data) => (Array.isArray(data) ? data.map(normalizeRepo) : []))
+      .catch(() => [])
+      .finally(() => {
+        reposRequest = null;
+      });
+  }
+
+  return reposRequest;
+};
+
+export const fetchRepoTree = async (_owner, repo, path = "", depth = 0) => {
+  if (depth > MAX_TREE_DEPTH) return [];
+
+  const requestKey = `${repo}:${path}:${depth}`;
+  if (treeRequests.has(requestKey)) {
+    return treeRequests.get(requestKey);
+  }
+
+  const request = buildRepoTree(repo, path, depth).finally(() => {
+    treeRequests.delete(requestKey);
+  });
+
+  treeRequests.set(requestKey, request);
+  return request;
+};
+
+const buildRepoTree = async (repo, path, depth) => {
+  const query = path ? `?path=${encodeURIComponent(path)}` : "";
+  let data;
+
   try {
-    const username = import.meta.env.VITE_GITHUB_USERNAME;
-    if (!username) return [];
-
-    const res = await requestGitHub(`${BASE_URL}/users/${username}/repos`);
-
-    if (!res.ok) return [];
-
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
-  } catch (err) {
-    console.error("fetchRepos error:", err);
+    data = await requestApi(
+      `/api/github/repos/${encodeURIComponent(repo)}/contents${query}`,
+    );
+  } catch {
     return [];
   }
-};
 
-// ===========================================
-// FETCH REPO TREE RECURSIVELY
-// ===========================================
-export const fetchRepoTree = async (
-  owner,
-  repo,
-  path = "",
-  depth = 0
-) => {
-  if (depth > 3) return [];
+  if (!Array.isArray(data)) return [];
 
-  try {
-    const res = await requestGitHub(
-      `${BASE_URL}/repos/${owner}/${repo}/contents/${path}`
-    );
+  const result = await Promise.all(
+    data.map(async (item) => {
+      if (!item?.name || !item?.type || !item?.path) return null;
 
-    if (!res.ok) return [];
-
-    const data = await res.json();
-    if (!Array.isArray(data)) return [];
-
-    const result = await Promise.all(
-      data.map(async (item) => {
-        if (!item?.name || !item?.type) return null;
-
-        // ===========================
-        // FOLDER
-        // ===========================
-        if (item.type === "dir") {
-          return {
-            id: item.sha,
-            name: item.name,
-            kind: "folder",
-            type: "folder",
-            icon: "/images/folder.png",
-            path: item.path,
-            repoName: repo,
-            repoOwner: owner,
-            children: await fetchRepoTree(owner, repo, item.path, depth + 1),
-          };
-        }
-
-        // ===========================
-        // FILE
-        // ===========================
-        const ext = item.name.includes(".")
-          ? item.name.split(".").pop().toLowerCase()
-          : "";
-
+      if (item.type === "dir") {
         return {
           id: item.sha,
           name: item.name,
-          kind: "file",
-          type: "file",
-          icon: "/images/file.png",
-          fileType: ext,
+          kind: "folder",
+          type: "folder",
+          icon: "/images/folder.png",
           path: item.path,
-          download_url: item.download_url || "",
           repoName: repo,
-          repoOwner: owner,
+          children: await fetchRepoTree("", repo, item.path, depth + 1),
         };
-      })
-    );
+      }
 
-    return result.filter(Boolean);
-  } catch (err) {
-    console.error("fetchRepoTree error:", err);
-    return [];
-  }
+      const extension = item.name.includes(".")
+        ? item.name.split(".").pop().toLowerCase()
+        : "";
+
+      return {
+        id: item.sha,
+        name: item.name,
+        kind: "file",
+        type: "file",
+        icon: "/images/file.png",
+        fileType: extension,
+        path: item.path,
+        repoName: repo,
+      };
+    }),
+  );
+
+  return result.filter(Boolean);
+};
+
+export const fetchRepoFileContent = async (repo, path) => {
+  const data = await requestApi(
+    `/api/github/repos/${encodeURIComponent(repo)}/contents?path=${encodeURIComponent(path)}`,
+  );
+
+  return typeof data?.content === "string" ? data.content : "";
 };

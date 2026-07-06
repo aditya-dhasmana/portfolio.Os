@@ -6,7 +6,7 @@
  * USED BY:
  * FinderWindow.
  * DEPENDS ON:
- * Location data and the onSelectLocation callback.
+ * Root location data, the canonical Finder path, and the navigation callback.
  * SHOULD NOT HANDLE:
  * Breadcrumbs, file grid rendering, file opening behavior, or window controls.
  * SCALING NOTES:
@@ -18,8 +18,9 @@ import clsx from "clsx";
 const FinderSidebarSection = ({
   title,
   items = [],
-  activeLocation,
-  onSelectLocation,
+  activeItem,
+  buildPath,
+  onNavigate,
 }) => (
   <div>
     <h3>{title}</h3>
@@ -27,9 +28,9 @@ const FinderSidebarSection = ({
       {items.map((item) => (
         <li
           key={item.id}
-          onClick={() => onSelectLocation(item)}
+          onClick={() => onNavigate(buildPath(item))}
           className={clsx(
-            item.id === activeLocation?.id ? "active" : "not-active"
+            item === activeItem ? "active" : "not-active"
           )}
           style={{ cursor: "default" }}
         >
@@ -44,24 +45,32 @@ const FinderSidebarSection = ({
 const FinderSidebar = ({
   favorites,
   projects,
-  activeLocation,
-  onSelectLocation,
-}) => (
-  <div className="sidebar">
-    <FinderSidebarSection
-      title="Favorites"
-      items={favorites}
-      activeLocation={activeLocation}
-      onSelectLocation={onSelectLocation}
-    />
+  currentPath,
+  onNavigate,
+}) => {
+  const activeRoot = currentPath[0];
+  const activeProject = activeRoot === favorites[0] ? currentPath[1] : null;
+  const workRoot = favorites[0];
 
-    <FinderSidebarSection
-      title="Projects"
-      items={projects}
-      activeLocation={activeLocation}
-      onSelectLocation={onSelectLocation}
-    />
-  </div>
-);
+  return (
+    <div className="sidebar">
+      <FinderSidebarSection
+        title="Favorites"
+        items={favorites}
+        activeItem={activeRoot}
+        buildPath={(item) => [item]}
+        onNavigate={onNavigate}
+      />
+
+      <FinderSidebarSection
+        title="Projects"
+        items={projects}
+        activeItem={activeProject}
+        buildPath={(item) => [workRoot, item]}
+        onNavigate={onNavigate}
+      />
+    </div>
+  );
+};
 
 export default FinderSidebar;

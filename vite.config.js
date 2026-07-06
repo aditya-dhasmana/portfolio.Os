@@ -7,6 +7,11 @@ import { fileURLToPath } from 'url';
 
 export default defineConfig({
   plugins: [react(), tailwindcss() ],
+  server: {
+    host: true,
+    port: 5174,
+    strictPort: true,
+  },
   resolve: {
     alias:{
       '#components': resolve(dirname(fileURLToPath(import.meta.url)),'src/components'),

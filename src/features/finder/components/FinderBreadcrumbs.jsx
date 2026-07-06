@@ -6,7 +6,7 @@
  * USED BY:
  * FinderWindow.
  * DEPENDS ON:
- * buildBreadcrumbTrail utility and the setActiveLocation callback.
+ * The canonical Finder path, breadcrumb utility, and navigation callback.
  * SHOULD NOT HANDLE:
  * File opening rules, sidebar rendering, window controls, or API requests.
  * SCALING NOTES:
@@ -18,8 +18,8 @@ import { ChevronRight } from "lucide-react";
 
 import { buildBreadcrumbTrail } from "../utils/buildBreadcrumbTrail";
 
-const FinderBreadcrumbs = ({ activeLocation, onSelectLocation }) => {
-  const breadcrumbTrail = buildBreadcrumbTrail(activeLocation);
+const FinderBreadcrumbs = ({ currentPath, onNavigate }) => {
+  const breadcrumbTrail = buildBreadcrumbTrail(currentPath);
 
   return (
     <div className="flex items-center gap-1 text-xs text-gray-500 px-4 py-2 border-b bg-gray-50 overflow-x-auto whitespace-nowrap">
@@ -27,7 +27,7 @@ const FinderBreadcrumbs = ({ activeLocation, onSelectLocation }) => {
         <React.Fragment key={`${crumb.id}-${index}`}>
           <button
             type="button"
-            onClick={() => onSelectLocation(crumb)}
+            onClick={() => onNavigate(currentPath.slice(0, index + 1))}
             className="hover:text-black"
           >
             {crumb.name}

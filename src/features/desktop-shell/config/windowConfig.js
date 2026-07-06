@@ -18,13 +18,13 @@ export const INITIAL_Z_INDEX = 1000;
 export const DEFAULT_WINDOW_SIZES = {
   finder: { width: 900, height: 650 },
   contact: { width: 600, height: 500 },
-  resume: { width: 800, height: 900 },
+  resume: { width: 800, height: 650 },
   safari: { width: 1200, height: 700 },
   photos: { width: 1000, height: 650 },
   terminal: { width: 700, height: 500 },
   vsCode: { width: 1100, height: 700 },
   txtfile: { width: 500, height: 600 },
-  imgfile: { width: 600, height: 700 },
+  imgfile: { width: 760, height: 560 },
 };
 
 const createWindowConfig = (size) => ({
@@ -45,7 +45,6 @@ export const WINDOW_CONFIG = {
   resume: createWindowConfig(DEFAULT_WINDOW_SIZES.resume),
   safari: createWindowConfig(DEFAULT_WINDOW_SIZES.safari),
   photos: createWindowConfig(DEFAULT_WINDOW_SIZES.photos),
-  gallery: createWindowConfig(DEFAULT_WINDOW_SIZES.gallery),
   terminal: createWindowConfig(DEFAULT_WINDOW_SIZES.terminal),
   vsCode: createWindowConfig(DEFAULT_WINDOW_SIZES.vsCode),
   txtfile: createWindowConfig(DEFAULT_WINDOW_SIZES.txtfile),

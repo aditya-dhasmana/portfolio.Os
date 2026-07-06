@@ -17,7 +17,7 @@ import { isCodeFile, isExternalLinkFile } from "./fileTypes";
 
 export const FINDER_OPEN_ACTIONS = {
   NONE: "none",
-  SET_LOCATION: "set-location",
+  NAVIGATE_TO_FOLDER: "navigate-to-folder",
   OPEN_WINDOW: "open-window",
   OPEN_EXTERNAL_LINK: "open-external-link",
 };
@@ -36,8 +36,8 @@ export const getFinderOpenAction = (item) => {
 
   if (item.kind === "folder") {
     return {
-      type: FINDER_OPEN_ACTIONS.SET_LOCATION,
-      location: item,
+      type: FINDER_OPEN_ACTIONS.NAVIGATE_TO_FOLDER,
+      folder: item,
     };
   }
 

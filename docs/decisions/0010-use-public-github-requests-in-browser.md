@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by [0011 - Put GitHub Access Behind A Minimal Backend](./0011-put-github-access-behind-a-minimal-backend.md)
 
 ## Context
 

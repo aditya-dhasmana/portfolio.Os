@@ -14,6 +14,11 @@ main.jsx
                     |
                     +-- fetchRepos()
                     +-- fetchRepoTree()
+                          |
+                          +-- Express GitHub proxy
+                                |
+                                +-- in-memory repo cache
+                                +-- GitHub REST API
         |
         +-- Desktop Shell
         |     |

@@ -6,7 +6,7 @@ const photos = locations.about.children.filter((item) => item.fileType === "img"
 const AboutApp = () => (
   <div className="mobile-page mobile-about-page">
     <section className="mobile-hero-card">
-      <img src="/images/adrian.jpg" alt="Aditya" />
+      <img src="/images/gal/circlesunset1.png" alt="Aditya" />
       <div>
         <p>Frontend Developer</p>
         <h1>Aditya Dhasmana</h1>

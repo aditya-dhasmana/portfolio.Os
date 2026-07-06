@@ -16,7 +16,12 @@
 import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 
-import { fetchRepos, fetchRepoTree } from "../../../api/github";
+import {
+  fetchRepoFileContent,
+  fetchRepos,
+  fetchRepoTree,
+} from "../../../api/github";
+import { fallbackProjects } from "../../portfolio/data/fallbackProjects";
 import WindowControls from "../../desktop-shell/components/WindowControls";
 import windowWrapper from "../../desktop-shell/hoc/windowWrapper";
 import useWindowStore from "../../desktop-shell/store/windowStore";
@@ -54,10 +59,12 @@ const CodePreview = () => {
   const prepareFile = useCallback(async (file) => {
     const preparedFile = { ...file };
 
-    if (!preparedFile.content && preparedFile.download_url) {
+    if (!preparedFile.content && preparedFile.repoName && preparedFile.path) {
       try {
-        const response = await fetch(preparedFile.download_url);
-        preparedFile.content = await response.text();
+        preparedFile.content = await fetchRepoFileContent(
+          preparedFile.repoName,
+          preparedFile.path,
+        );
       } catch {
         preparedFile.content = "// Unable to load file";
       }
@@ -74,7 +81,9 @@ const CodePreview = () => {
   }, [addFileTab, prepareFile]);
 
   useEffect(() => {
-    fetchRepos().then(setRepos);
+    fetchRepos()
+      .then((items) => setRepos(items.length > 0 ? items : fallbackProjects))
+      .catch(() => setRepos(fallbackProjects));
   }, []);
 
   useEffect(() => {
@@ -96,6 +105,11 @@ const CodePreview = () => {
       setRepoTrees((prev) => ({
         ...prev,
         [repo.id]: data,
+      }));
+    } catch {
+      setRepoTrees((prev) => ({
+        ...prev,
+        [repo.id]: [],
       }));
     } finally {
       setLoadingRepoId(null);

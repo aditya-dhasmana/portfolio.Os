@@ -81,7 +81,7 @@ This content may appear in both desktop and mobile UI. Because of that, it shoul
 
 ### 3. GitHub Data
 
-GitHub data owns external repository fetching and transformation.
+GitHub data crosses a frontend/backend boundary. The backend owns authenticated external requests and safety policy; the frontend adapter owns transformation into UI-friendly shapes.
 
 Responsibilities:
 
@@ -89,6 +89,9 @@ Responsibilities:
 - Fetch repository trees.
 - Convert GitHub API responses into file/folder nodes.
 - Handle loading and failure states.
+- Keep the GitHub token on the backend.
+- Return public repositories and safe fields only.
+- Fall back to static projects when live data is unavailable.
 
 UI components should ask for GitHub data. They should not know too much about how the API is shaped.
 

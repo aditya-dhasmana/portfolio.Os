@@ -53,7 +53,7 @@ export const techStack = [
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express", "NestJS", "Hono"],
+    items: ["Node.js", "Express", "NestJS"],
   },
   {
     category: "Database",
@@ -127,22 +127,22 @@ export const photosLinks = [
 export const gallery = [
   {
     id: 1,
-    img: "/images/gal1.png",
-    name: "sunset-beach.jpg",
+    img: "/gal/chibi-luffy.png",
+    name: "chibi-luffy.png",
   },
   {
     id: 2,
-    img: "/images/gal2.png",
-    name: "mountain-landscape.jpg",
+    img: "/gal/CodingAndChill.png",
+    name: "CodingAndChill.png",
   },
   {
     id: 3,
-    img: "/images/gal3.png",
-    name: "city-lights.jpg",
+    img: "/gal/circlesunset1.png",
+    name: "circlesunset1.png",
   },
   {
     id: 4,
-    img: "/images/gal4.png",
+    img: "/gal/riccardo-trimeloni.jpg",
     name: "summer-vacation.jpg",
   },
 ];

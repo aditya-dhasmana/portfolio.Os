@@ -135,17 +135,37 @@ Create a production build:
 npm run build
 ```
 
-## Environment Variables
+## GitHub Backend And Environment Variables
 
-The app currently reads GitHub configuration from Vite environment variables.
+The browser calls a small Express proxy in `backend/`. Copy the two example files and keep real `.env` files uncommitted.
+
+Frontend `.env`:
 
 ```txt
-VITE_GITHUB_USERNAME=
+VITE_API_BASE_URL=http://localhost:4000
 ```
 
-Important: Vite exposes `VITE_` variables to the browser. Do not place private GitHub tokens, API keys, or secrets in `VITE_` variables.
+Backend `backend/.env`:
 
-GitHub repository data is fetched through public unauthenticated requests. If private repositories or higher rate limits are needed later, move GitHub authentication behind a backend/API route so the token stays on the server.
+```txt
+GITHUB_TOKEN=
+GITHUB_USERNAME=aditya-dhasmana
+CACHE_TTL_SECONDS=900
+ALLOWED_REPOS=
+FRONTEND_ORIGINS=http://localhost:5173,http://localhost:5174,http://localhost:5175,http://127.0.0.1:5173,http://127.0.0.1:5174,http://127.0.0.1:5175,http://192.168.0.100:5173,http://192.168.0.100:5174,http://192.168.0.100:5175
+```
+
+Never place a GitHub token in a `VITE_` variable. Vite variables are shipped to the browser; `GITHUB_TOKEN` is read only by the backend.
+
+Run the backend in a second terminal:
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Then run the frontend from the repository root with `npm run dev`.
 
 ## Refactoring Roadmap
 

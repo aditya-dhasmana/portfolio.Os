@@ -1,7 +1,23 @@
+/**
+ * PURPOSE:
+ * Present GitHub repositories and safe source previews in the mobile shell.
+ * RESPONSIBILITY:
+ * Coordinate repository selection, tree loading, file selection, and mobile code-view state.
+ * USED BY:
+ * The mobile shell app registry for Code and GitHub modes.
+ * DEPENDS ON:
+ * The frontend GitHub adapter, portfolio fallback data, React, and Lucide icons.
+ * SHOULD NOT HANDLE:
+ * GitHub tokens, direct GitHub requests, backend filtering, or desktop code-preview state.
+ * SCALING NOTES:
+ * Extract a shared repository-browser hook if desktop and mobile coordination logic grows further.
+ */
+
 import { useEffect, useState } from "react";
 import { ExternalLink, FolderGit2, Loader2 } from "lucide-react";
 
-import { fetchRepos, fetchRepoTree } from "../../../api/github";
+import { fetchRepoFileContent, fetchRepos, fetchRepoTree } from "../../../api/github";
+import { fallbackProjects } from "../../portfolio/data/fallbackProjects";
 
 const CodeApp = ({ mode = "code" }) => {
   const [repos, setRepos] = useState([]);
@@ -16,12 +32,12 @@ const CodeApp = ({ mode = "code" }) => {
     fetchRepos()
       .then((items) => {
         if (!alive) return;
-        setRepos(items);
+        setRepos(items.length > 0 ? items : fallbackProjects);
         setLoading(false);
       })
       .catch(() => {
         if (!alive) return;
-        setRepos([]);
+        setRepos(fallbackProjects);
         setLoading(false);
       });
 
@@ -34,18 +50,23 @@ const CodeApp = ({ mode = "code" }) => {
     setActiveRepo(repo);
     setActiveFile(null);
     setTree([]);
-    const nodes = await fetchRepoTree(repo.owner.login, repo.name);
-    setTree(nodes);
+
+    try {
+      const nodes = await fetchRepoTree(repo.owner.login, repo.name);
+      setTree(nodes);
+    } catch {
+      setTree([]);
+    }
   };
 
   const openFile = async (file) => {
     if (file.kind === "folder") return;
-    if (!file.download_url) return;
+    if (!file.repoName || !file.path) return;
 
     setActiveFile({ ...file, content: "Loading..." });
     try {
-      const response = await fetch(file.download_url);
-      setActiveFile({ ...file, content: await response.text() });
+      const content = await fetchRepoFileContent(file.repoName, file.path);
+      setActiveFile({ ...file, content });
     } catch {
       setActiveFile({ ...file, content: "Unable to load this file." });
     }

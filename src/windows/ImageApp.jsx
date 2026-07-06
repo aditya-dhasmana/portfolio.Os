@@ -1,52 +1,41 @@
-import React from "react";
-import windowWrapper from "../features/desktop-shell/hoc/windowWrapper";
-import WindowControls from "../features/desktop-shell/components/WindowControls";
+/**
+ * PURPOSE:
+ * Present Finder image files in a stable macOS-style preview window.
+ * RESPONSIBILITY:
+ * Read the selected image, render a fixed title bar, and compose the shared image preview stage.
+ * USED BY:
+ * The desktop window registry through the imgfile window ID.
+ * DEPENDS ON:
+ * Desktop window state, window controls, window wrapper, and the shared media preview stage.
+ * SHOULD NOT HANDLE:
+ * Finder navigation, Gallery actions, image mutation, downloads, or window sizing rules.
+ * SCALING NOTES:
+ * Keep image display behavior in ImagePreviewStage so other preview surfaces remain consistent.
+ */
+
 import { useWindowStore } from "#store";
 
+import windowWrapper from "../features/desktop-shell/hoc/windowWrapper";
+import WindowControls from "../features/desktop-shell/components/WindowControls";
+import ImagePreviewStage from "../features/media/components/ImagePreviewStage";
+
+// eslint-disable-next-line react-refresh/only-export-components
 const ImageApp = () => {
   const { windows } = useWindowStore();
   const data = windows.imgfile?.data;
-
-  if (!data) {
-    return (
-      <div id="window-header">
-        <WindowControls target="imgfile" />
-        <h2>No Data</h2>
-      </div>
-    );
-  }
-
-  const {
-    name = "Untitled",
-    image,
-    imageUrl
-  } = data;
-
-  const finalImage = image || imageUrl;
+  const name = data?.name || "Image Preview";
+  const imageSource = data?.image || data?.imageUrl || "";
 
   return (
-    <>
-      {/* ✅ MATCH TERMINAL */}
-      <div id="window-header">
+    <div className="image-preview-window">
+      <div id="window-header" className="image-preview-header">
         <WindowControls target="imgfile" />
-        <h2>{name}</h2>
+        <h2 title={name}>{name}</h2>
       </div>
 
-      <div className="p-5 bg-white overflow-y-auto max-h-[70vh]">
-        {finalImage && (
-          <div className="w-full">
-            <img
-              src={finalImage}
-              alt={name || "image"}
-              className="w-full h-auto rounded"
-            />
-          </div>
-        )}
-      </div>
-    </>
+      <ImagePreviewStage src={imageSource} alt={name} />
+    </div>
   );
 };
 
-const ImageWindow = windowWrapper(ImageApp, "imgfile");
-
-export default ImageWindow;
+export default windowWrapper(ImageApp, "imgfile");

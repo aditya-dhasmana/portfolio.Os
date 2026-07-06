@@ -50,7 +50,7 @@ const generateDesktopPositions = (items) => {
 const Home = () => {
   const containerRef = useRef(null);
 
-  const { setActiveLocation } = useLocationStore();
+  const { navigateTo } = useLocationStore();
   const { openWindow, windows } = useWindowStore();
   const { work } = useDataStore();
 
@@ -60,7 +60,7 @@ const Home = () => {
   }, [work]);
 
   const handleOpenProjectFinder = (project) => {
-    setActiveLocation(project);
+    navigateTo([work, project]);
 
     if (!windows.finder?.isOpen) {
       openWindow("finder", {

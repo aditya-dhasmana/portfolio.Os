@@ -48,11 +48,11 @@ const useWindowStore = create((set) => ({
   windows: WINDOW_CONFIG,
 
   openWindow: (name, data = null) => {
-    currentZIndex += 1;
-
     set((state) => {
       const current = state.windows[name];
       if (!current) return state;
+
+      currentZIndex += 1;
 
       return {
         windows: {
@@ -71,97 +71,132 @@ const useWindowStore = create((set) => ({
   },
 
   closeWindow: (name) => {
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          isOpen: false,
-          isMinimized: false,
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            isOpen: false,
+            isMinimized: false,
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   focusWindow: (name) => {
-    currentZIndex += 1;
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
 
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          zIndex: currentZIndex,
+      currentZIndex += 1;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            zIndex: currentZIndex,
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   minimizeWindow: (name) => {
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          isMinimized: true,
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            isMinimized: true,
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   restoreWindow: (name) => {
-    currentZIndex += 1;
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
 
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          isOpen: true,
-          isMinimized: false,
-          zIndex: currentZIndex,
-          position:
-            state.windows[name]?.position ||
-            getCenteredPosition(name, state.windows[name]?.size),
+      currentZIndex += 1;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            isOpen: true,
+            isMinimized: false,
+            zIndex: currentZIndex,
+            position:
+              current.position ||
+              getCenteredPosition(name, current.size),
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   setWindowPosition: (name, position) => {
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          position,
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            position,
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   setWindowSize: (name, size) => {
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          size,
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            size,
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   setSizeMode: (name, sizeMode) => {
-    set((state) => ({
-      windows: {
-        ...state.windows,
-        [name]: {
-          ...state.windows[name],
-          sizeMode,
+    set((state) => {
+      const current = state.windows[name];
+      if (!current) return state;
+
+      return {
+        windows: {
+          ...state.windows,
+          [name]: {
+            ...current,
+            sizeMode,
+          },
         },
-      },
-    }));
+      };
+    });
   },
 
   toggleMaximize: (name) => {

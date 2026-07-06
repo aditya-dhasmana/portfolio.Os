@@ -41,7 +41,7 @@ const Welcome = lazy(() => import("../components/Welcome"));
 const App = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const { windows } = useWindowStore();
-  const { setActiveLocation } = useLocationStore();
+  const { resetNavigation } = useLocationStore();
   const { loadPortfolioFileSystem } = usePortfolioFileSystem();
 
   const [isReady, setIsReady] = useState(false);
@@ -55,8 +55,10 @@ const App = () => {
         const work = await loadPortfolioFileSystem();
 
         if (isAlive) {
-          setActiveLocation(work);
+          resetNavigation(work);
         }
+      } catch {
+        // The portfolio hook owns error state; startup must not leak a rejected promise.
       } finally {
         readyTimer = setTimeout(() => {
           if (isAlive) {
@@ -74,7 +76,7 @@ const App = () => {
         clearTimeout(readyTimer);
       }
     };
-  }, [loadPortfolioFileSystem, setActiveLocation]);
+  }, [loadPortfolioFileSystem, resetNavigation]);
 
   if (!isReady) return <IntroLoader />;
 

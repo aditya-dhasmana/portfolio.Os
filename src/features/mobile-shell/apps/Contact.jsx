@@ -3,7 +3,7 @@ import { socials } from "#constants";
 const ContactApp = () => (
   <div className="mobile-page">
     <section className="mobile-contact-hero">
-      <img src="/images/adrian.jpg" alt="Aditya" />
+      <img src="/gal/circlesunset1.png" alt="Aditya" />
       <h1>Let's Connect</h1>
       <p>Got an idea, a bug to squash, or just want to talk through a build?</p>
     </section>

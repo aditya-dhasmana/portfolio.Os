@@ -14,39 +14,10 @@
  */
 
 import { fetchRepos, fetchRepoTree } from "../../../api/github";
+import { fallbackProjects } from "../data/fallbackProjects";
 
 let cachedWork = null;
-
-const createFallbackRepos = () => {
-  const username = import.meta.env.VITE_GITHUB_USERNAME || "aditya-dhasmana";
-
-  return [
-    {
-      id: "fallback-macfolio",
-      name: "Macfolio",
-      description: "Interactive macOS-style portfolio built with React.",
-      html_url: `https://github.com/${username}/Macfolio`,
-      homepage: "",
-      owner: { login: username },
-    },
-    {
-      id: "fallback-portfolio",
-      name: "Portfolio",
-      description: "Frontend portfolio projects and UI experiments.",
-      html_url: `https://github.com/${username}?tab=repositories`,
-      homepage: "",
-      owner: { login: username },
-    },
-    {
-      id: "fallback-react-projects",
-      name: "React Projects",
-      description: "React practice projects available from GitHub.",
-      html_url: `https://github.com/${username}?tab=repositories`,
-      homepage: "",
-      owner: { login: username },
-    },
-  ];
-};
+let workRequest = null;
 
 const attachParents = (nodes = [], parent = null) => {
   return nodes.map((node) => {
@@ -63,15 +34,17 @@ const attachParents = (nodes = [], parent = null) => {
   });
 };
 
-const buildRepoFolder = async (repo) => {
+const buildRepoFolder = async (repo, shouldLoadTree) => {
   if (!repo.name) return null;
 
   let tree = [];
 
-  try {
-    tree = await fetchRepoTree(repo.owner.login, repo.name);
-  } catch {
-    tree = [];
+  if (shouldLoadTree) {
+    try {
+      tree = await fetchRepoTree(repo.owner.login, repo.name);
+    } catch {
+      tree = [];
+    }
   }
 
   const sourceFolder = {
@@ -109,12 +82,20 @@ const buildRepoFolder = async (repo) => {
   };
 };
 
-export const buildWorkLocation = async () => {
-  if (cachedWork) return cachedWork;
+const createWorkLocation = async () => {
+  let repos = [];
 
-  const repos = await fetchRepos();
-  const sourceRepos = repos.length > 0 ? repos : createFallbackRepos();
-  const repoFolders = await Promise.all(sourceRepos.map(buildRepoFolder));
+  try {
+    repos = await fetchRepos();
+  } catch {
+    repos = [];
+  }
+
+  const hasLiveRepos = repos.length > 0;
+  const sourceRepos = hasLiveRepos ? repos : fallbackProjects;
+  const repoFolders = await Promise.all(
+    sourceRepos.map((repo) => buildRepoFolder(repo, hasLiveRepos)),
+  );
 
   const rawWork = {
     id: 1,
@@ -132,4 +113,16 @@ export const buildWorkLocation = async () => {
   }
 
   return work;
+};
+
+export const buildWorkLocation = () => {
+  if (cachedWork) return Promise.resolve(cachedWork);
+
+  if (!workRequest) {
+    workRequest = createWorkLocation().finally(() => {
+      workRequest = null;
+    });
+  }
+
+  return workRequest;
 };

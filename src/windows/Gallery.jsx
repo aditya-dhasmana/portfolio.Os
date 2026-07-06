@@ -1,6 +1,22 @@
+/**
+ * PURPOSE:
+ * Render the desktop Gallery window and its image preview experience.
+ * RESPONSIBILITY:
+ * Coordinate gallery navigation, view modes, image selection, and image actions.
+ * USED BY:
+ * The desktop application window registry.
+ * DEPENDS ON:
+ * Gallery content, desktop window controls, image rendering, icons, and motion utilities.
+ * SHOULD NOT HANDLE:
+ * Image asset processing, global window state, or mobile Gallery presentation.
+ * SCALING NOTES:
+ * Keep Gallery-specific interaction state here; extract sections only when their behavior grows independently.
+ */
+
 import React, { useState } from "react";
 import windowWrapper from "../features/desktop-shell/hoc/windowWrapper";
 import WindowControls from "../features/desktop-shell/components/WindowControls";
+import ImagePreviewStage from "../features/media/components/ImagePreviewStage";
 import { OptimizedImage } from "#components/Index";
 import { photosLinks, gallery } from "#constants";
 import { motion as Motion, AnimatePresence } from "framer-motion";
@@ -257,15 +273,12 @@ const Gallery = () => {
                 </button>
               </div>
 
-              {/* Modal Content */}
-              <div className="modal-body">
-                <div className="modal-image-container">
-                  <OptimizedImage
-                    src={selectedImage.img}
-                    alt={`Gallery image ${selectedImage.id}`}
-                  />
-                </div>
-              </div>
+              {/* Image Preview Stage */}
+              <ImagePreviewStage
+                src={selectedImage.img}
+                alt={selectedImage.name || `Gallery image ${selectedImage.id}`}
+                className="modal-stage"
+              />
 
               {/* Modal Footer */}
               <div className="modal-footer">
