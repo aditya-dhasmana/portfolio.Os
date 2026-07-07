@@ -19,3 +19,9 @@ Keep intent matching in a pure module and return one stable response shape. Let 
 ## Scaling lesson
 
 If a second provider is added later, it should produce the same response contract. The UI then stays stable while the interpretation strategy evolves.
+
+## Memory lesson
+
+Store the smallest fact that lets the next question make sense. Remember a project ID, not a ProjectCard component. Remember an intent, not a copied response. Small, domain-level memory stays testable and can be reconstructed from the data source.
+
+Session memory belongs in Safari today because only Safari uses it. Moving it into Zustand before another feature needs it would create global coupling without a benefit.

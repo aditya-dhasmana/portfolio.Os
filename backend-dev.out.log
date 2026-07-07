@@ -1,0 +1,13 @@
+
+> macfolio-github-proxy@1.0.0 dev
+> node --watch src/server.js
+
+Macfolio GitHub proxy listening on http://localhost:4000
+Restarting 'src/server.js'
+Macfolio GitHub proxy listening on http://localhost:4000
+Restarting 'src/server.js'
+Macfolio GitHub proxy listening on http://localhost:4000
+Restarting 'src/server.js'
+Macfolio GitHub proxy listening on http://localhost:4000
+Restarting 'src/server.js'
+Macfolio GitHub proxy listening on http://localhost:4000

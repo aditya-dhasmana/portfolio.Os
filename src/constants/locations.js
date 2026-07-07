@@ -139,3 +139,4 @@ export const locations = {
   gallery: GALLERY_LOCATION,
   vsCode: VSCODE_LOCATION,
 };
+

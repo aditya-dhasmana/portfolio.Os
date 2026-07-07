@@ -29,6 +29,7 @@
 }
 
 #safari:not(.window-full) {
+  max-width: calc(100vw - 36px);
   max-height: calc(100vh - 116px);
 }
 
@@ -126,6 +127,61 @@
   line-height: 1.42;
 }
 
+#safari .portfolio-agent-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 7px;
+}
+
+#safari .portfolio-mode-selector {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid #e3e5ed;
+  border-radius: 999px;
+  background: #f5f6fa;
+}
+
+#safari .portfolio-mode-selector button {
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #747b91;
+  font-size: 9px;
+  font-weight: 700;
+  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+}
+
+#safari .portfolio-mode-selector button[aria-pressed="true"] {
+  background: #fff;
+  color: #5548d6;
+  box-shadow: 0 2px 7px rgba(55, 58, 86, 0.12);
+}
+
+#safari .portfolio-mode-selector button:disabled { opacity: 0.55; }
+
+#safari .portfolio-agent-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #747b91;
+  font-size: 9px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+#safari .portfolio-agent-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4bb66a;
+  box-shadow: 0 0 0 3px rgba(75, 182, 106, 0.1);
+}
+
+#safari .portfolio-agent-status--ai-enhanced i { background: #6b5cf5; }
+#safari .portfolio-agent-status--using-local-fallback i { background: #e39a3b; }
+#safari .portfolio-agent-status--thinking i { background: #6b5cf5; }
+
 #safari .portfolio-prompts {
   display: flex;
   flex: 0 0 auto;
@@ -166,6 +222,8 @@
 }
 
 #safari .portfolio-prompts svg { width: 16px; height: 16px; color: var(--safari-purple); }
+#safari .portfolio-prompts button:disabled,
+#safari .portfolio-response__actions button:disabled { opacity: 0.5; transform: none; }
 
 #safari .portfolio-transcript {
   display: flex;
@@ -237,6 +295,56 @@
   line-height: 1.48;
 }
 
+#safari .portfolio-response__notice {
+  margin-top: 6px;
+  padding: 6px 9px;
+  border: 1px solid #f0d9aa;
+  border-radius: 8px;
+  background: #fff9ed;
+  color: #8a672c;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+#safari .portfolio-thinking {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 62%;
+}
+
+#safari .portfolio-thinking__bubble {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid #e3e5ed;
+  border-radius: 4px 15px 15px 15px;
+  background: #fff;
+  color: #737a91;
+  box-shadow: 0 5px 15px rgba(45, 50, 75, 0.06);
+  font-size: 11px;
+}
+
+#safari .portfolio-thinking__dots { display: inline-flex; gap: 3px; }
+
+#safari .portfolio-thinking__dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #7667f2;
+  animation: safari-thinking-dot 900ms ease-in-out infinite;
+}
+
+#safari .portfolio-thinking__dots i:nth-child(2) { animation-delay: 120ms; }
+#safari .portfolio-thinking__dots i:nth-child(3) { animation-delay: 240ms; }
+
+@keyframes safari-thinking-dot {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
+}
+
 #safari .portfolio-cards {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -245,7 +353,7 @@
 
 #safari .portfolio-card {
   display: flex;
-  min-height: 146px;
+  min-height: 164px;
   min-width: 0;
   flex-direction: column;
   padding: 11px;
@@ -290,32 +398,51 @@
 
 #safari .portfolio-card__tags { color: #777e92; font-size: 9px; }
 
-#safari .portfolio-card > button {
+#safari .portfolio-card__actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+#safari .portfolio-card__actions button,
+#safari .portfolio-card__actions a {
+  display: flex;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  width: 100%;
-  min-height: 29px;
-  margin-top: auto;
+  gap: 4px;
+  min-height: 27px;
+  padding: 4px 7px;
+  border: 1px solid #e6e4f5;
   border-radius: 7px;
-  background: #f0edff;
-  color: #5d4bea;
-  font-size: 10px;
+  background: #fff;
+  color: #656b7d;
+  font-size: 9px;
   font-weight: 700;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
   transition: filter 150ms ease, transform 150ms ease;
 }
 
-#safari .portfolio-card > button:hover { filter: saturate(1.18); transform: translateY(-1px); }
-#safari .portfolio-card > button svg { width: 13px; height: 13px; }
+#safari .portfolio-card__actions .is-primary {
+  background: #f0edff;
+  color: #5d4bea;
+}
+
+#safari .portfolio-card__actions button:hover,
+#safari .portfolio-card__actions a:hover { filter: saturate(1.18); transform: translateY(-1px); }
+#safari .portfolio-card__actions svg { width: 11px; height: 11px; }
 #safari .portfolio-card--green .portfolio-card__heading > span,
-#safari .portfolio-card--green > button { background: #eaf8ee; color: #269247; }
+#safari .portfolio-card--green .portfolio-card__actions .is-primary { background: #eaf8ee; color: #269247; }
 #safari .portfolio-card--blue .portfolio-card__heading > span,
-#safari .portfolio-card--blue > button { background: #eaf3ff; color: #3477db; }
+#safari .portfolio-card--blue .portfolio-card__actions .is-primary { background: #eaf3ff; color: #3477db; }
 #safari .portfolio-card--orange .portfolio-card__heading > span,
-#safari .portfolio-card--orange > button { background: #fff0e8; color: #ed6d34; }
+#safari .portfolio-card--orange .portfolio-card__actions .is-primary { background: #fff0e8; color: #ed6d34; }
 #safari .portfolio-card--pink .portfolio-card__heading > span,
-#safari .portfolio-card--pink > button { background: #ffedf6; color: #e73e91; }
+#safari .portfolio-card--pink .portfolio-card__actions .is-primary { background: #ffedf6; color: #e73e91; }
 
 #safari .portfolio-response__actions {
   display: flex;
@@ -344,16 +471,23 @@
 
 #safari .portfolio-composer > svg { width: 18px; height: 18px; color: #8992a8; }
 
-#safari .portfolio-composer input {
+#safari .portfolio-composer textarea {
+  align-self: center;
   min-width: 0;
+  max-height: 40px;
+  padding: 0;
+  resize: none;
+  overflow-y: auto;
   border: 0;
   outline: 0;
   background: transparent;
   color: #22263a;
+  font-family: inherit;
   font-size: 12px;
+  line-height: 1.4;
 }
 
-#safari .portfolio-composer input::placeholder { color: #9aa2b8; }
+#safari .portfolio-composer textarea::placeholder { color: #9aa2b8; }
 
 #safari .portfolio-composer button {
   display: grid;
@@ -392,5 +526,6 @@
   #safari .portfolio-chat { padding-top: 9px; }
   #safari .portfolio-avatar { width: 44px; height: 44px; font-size: 23px; }
   #safari .portfolio-chat__intro p { display: none; }
+  #safari .portfolio-agent-controls { margin-top: 4px; }
   #safari .portfolio-prompts { margin: 9px 0; }
 }
